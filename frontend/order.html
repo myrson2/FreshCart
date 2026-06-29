@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FreshCart - Warehouse & Logistics Control Center</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Roboto+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Bootstrap Icons (CSS-only) -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="styles/style.css">
+  <link rel="stylesheet" href="styles/order.css">
+</head>
+<body>
+  <!-- Hidden Radio States for Tab Switching -->
+  <input type="radio" name="app-tab" id="tab-dashboard" class="tab-radio-state" style="display: none;">
+  <input type="radio" name="app-tab" id="tab-inventory" class="tab-radio-state" style="display: none;">
+  <input type="radio" name="app-tab" id="tab-order" class="tab-radio-state" checked style="display: none;">
+  
+  <!-- Hidden Checkbox for Theme Toggle -->
+  <input type="checkbox" id="theme-toggle" class="theme-checkbox-state" style="display: none;">
+  <script>
+    if (localStorage.getItem('theme') === 'dark') {
+      document.getElementById('theme-toggle').checked = true;
+      document.body.classList.add('dark-mode');
+    }
+  </script>
+
+  <!-- Main App Layout Wrapper -->
+  <div class="app-layout">
+    
+    <!-- Left Sidebar Navigation -->
+    <aside class="app-sidebar">
+      <div class="sidebar-header">
+        <div class="brand-logo">
+          <i class="bi bi-cart3"></i>
+        </div>
+        <div class="brand-info">
+          <h2>FreshCart</h2>
+          <span>Warehouse Operations</span>
+        </div>
+      </div>
+      
+      <!-- Navigation Menu -->
+      <nav class="sidebar-menu">
+        <a class="menu-item" href="dashboard.html" id="nav-dashboard">
+          <i class="bi bi-grid-1x2"></i>
+          <span>Dashboard</span>
+        </a>
+        <a class="menu-item" href="inventory.html" id="nav-inventory">
+          <i class="bi bi-box-seam"></i>
+          <span>Inventory</span>
+        </a>
+        <a class="menu-item" href="order.html" id="nav-order">
+          <i class="bi bi-bag"></i>
+          <span>Order</span>
+        </a>
+      </nav>
+      
+      <!-- Sidebar Footer User Profile -->
+      <div class="sidebar-footer">
+        <div class="user-profile">
+          <div class="user-avatar">
+            <span>JB</span>
+            <span class="user-status-dot online"></span>
+          </div>
+          <div class="user-details">
+            <h4>Jose Myrson</h4>
+            <p>Operations Lead</p>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+      
+      <!-- Top Header Bar -->
+      <header class="header-bar">
+        <div class="header-title-group">
+          <div class="title-dashboard-only">
+            <h1>Dashboard</h1>
+            <p>Real-time status of stocks and dispatches</p>
+          </div>
+          <div class="title-inventory-only">
+            <h1>Inventory</h1>
+            <p>Physical catalog controls and freshness states</p>
+          </div>
+          <div class="title-order-only">
+            <h1>Order Dispatch Engine</h1>
+            <p>Fulfill queue dispatches and track routes</p>
+          </div>
+        </div>
+        
+        <div class="header-actions">
+          <div class="status-indicator">
+            <span class="status-dot"></span>
+            <span class="status-text">LIVE SYNCED</span>
+          </div>
+          
+          <div class="system-time text-mono">
+            <i class="bi bi-clock"></i>
+            <span id="live-time">22:45:00</span>
+          </div>
+          
+          <!-- Mockup circular header controls -->
+          <div class="header-controls">
+            <label class="circle-btn" for="theme-toggle" id="btn-theme-toggle" title="Toggle Light/Dark Theme" style="cursor: pointer;">
+              <i class="bi bi-sun sun-icon"></i>
+              <i class="bi bi-moon moon-icon" style="display: none;"></i>
+            </label>
+            <button class="circle-btn" id="btn-alerts-toggle" title="System Warnings Dashboard">
+              <i class="bi bi-bell"></i>
+              <span class="btn-badge" id="alerts-count">2</span>
+            </button>
+            <button class="circle-btn" id="btn-settings-toggle" title="Control Settings">
+              <i class="bi bi-gear"></i>
+            </button>
+            <div class="profile-circle" title="User Profile">
+              <img src="https://api.dicebear.com/7.x/bottts/svg?seed=FreshCart" alt="User Profile">
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- Views Content Container -->
+      <div class="view-container">
+        
+        <!-- ==================== VIEW 3: ORDER DISPATCH ==================== -->
+        <section id="view-order" class="app-view">
+          <div class="orders-dashboard">
+            
+            <!-- Bitepoint-style Orders Header -->
+            <div class="orders-header">
+              <div class="orders-header-left">
+                <h2>Orders</h2>
+              </div>
+              <div class="orders-header-right text-mono" id="live-date">
+                Wednesday, 12 July 2023
+              </div>
+            </div>
+
+            <!-- Actions and Filters Bar -->
+            <div class="orders-actions-bar">
+              <div class="filter-chips">
+                <button class="chip active" data-filter="all">All</button>
+                <button class="chip" data-filter="ready">Ready</button>
+                <button class="chip" data-filter="progress">On Process</button>
+                <button class="chip" data-filter="completed">Completed</button>
+              </div>
+              <div class="actions-bar-right">
+                <button class="btn-icon-styled" title="Filter Settings"><i class="bi bi-sliders"></i></button>
+                <div class="search-wrapper-styled">
+                  <input type="text" class="search-input-styled" id="order-search" placeholder="Search a name, order, or etc">
+                  <i class="bi bi-search search-icon-right"></i>
+                </div>
+                <button class="btn-new-order" id="btn-open-dispatch-form">New Order</button>
+              </div>
+            </div>
+
+            <!-- Responsive Orders Grid -->
+            <div class="orders-grid-container" id="orders-grid-container">
+              
+              <!-- Card 1 -->
+              <div class="order-card-styled" data-status="ready">
+                <div class="card-header-row">
+                  <div class="header-user-info">
+                    <div class="user-initials-avatar bg-green-teal">AH</div>
+                    <div class="user-meta">
+                      <h4>Ariel Hikmat</h4>
+                      <span>Order #Fresh-8290 / Delivery</span>
+                    </div>
+                  </div>
+                  <div class="status-group-right">
+                    <span class="status-badge-styled ready"><i class="bi bi-check2-circle"></i> Ready</span>
+                    <span class="status-badge-subtext">Ready to serve</span>
+                  </div>
+                </div>
+                <div class="date-time-row">
+                  <span>Monday, 29 June 2026</span>
+                  <span class="text-mono">06:12 PM</span>
+                </div>
+                <table class="items-table-styled">
+                  <thead>
+                    <tr>
+                      <th>Items</th>
+                      <th class="text-center-aligned" style="width: 50px;">Qty</th>
+                      <th class="text-right-aligned" style="width: 80px;">Price</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td class="item-name-col">Organic Bananas (2.5 kg)</td>
+                      <td class="text-center-aligned text-mono">1</td>
+                      <td class="text-right-aligned text-mono">₱300.00</td>
+                    </tr>
+                  </tbody>
+                </table>
+                <div class="card-footer-styled">
+                  <div class="total-row-styled">
+                    <span class="total-label">Total</span>
+                    <span class="total-amount text-mono">₱300.00</span>
+                  </div>
+                  <div class="card-actions-row">
+                    <button class="btn-card-secondary">See Details</button>
+                    <button class="btn-card-primary action-dispatch-btn" data-order-id="Fresh-8290">Dispatch</button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Card 2 -->
+              <div class="order-card-styled" data-status="progress">
+                <div class="card-header-row">
+                  <div class="header-user-info">
+                    <div class="user-initials-avatar bg-indigo-blue">DF</div>
+                    <div class="user-meta">
+                      <h4>Denis Freeman</h4>
+                      <span>Order #Fresh-7411 / Delivery</span>
+                    </div>
+                  </div>
+                  <div class="status-group-right">
+                    <span class="status-badge-styled progress"><i class="bi bi-clock-history"></i> In Progress</span>
+                    <span class="status-badge-subtext">Packing cargo</span>
+                  </div>
+                </div>
+                <div class="date-time-row">
+                  <span>Monday, 29 June 2026</span>
+                  <span class="text-mono">06:18 PM</span>
+                </div>
+                <table class="items-table-styled">
+                  <thead>
+                    <tr>
+                      <th>Items</th>
+                      <th class="text-center-aligned" style="width: 50px;">Qty</th>
+                      <th class="text-right-aligned" style="width: 80px;">Price</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td class="item-name-col">Premium Whole Milk (2.0 Units)</td>
+                      <td class="text-center-aligned text-mono">1</td>
+                      <td class="text-right-aligned text-mono">₱198.00</td>
+                    </tr>
+                  </tbody>
+                </table>
+                <div class="card-footer-styled">
+                  <div class="total-row-styled">
+                    <span class="total-label">Total</span>
+                    <span class="total-amount text-mono">₱198.00</span>
+                  </div>
+                  <div class="card-actions-row">
+                    <button class="btn-card-secondary">See Details</button>
+                    <button class="btn-card-primary action-dispatch-btn" data-order-id="Fresh-7411">Dispatch</button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Card 3 -->
+              <div class="order-card-styled" data-status="completed">
+                <div class="card-header-row">
+                  <div class="header-user-info">
+                    <div class="user-initials-avatar bg-amber-yellow">MC</div>
+                    <div class="user-meta">
+                      <h4>Morgan Cox</h4>
+                      <span>Order #Fresh-9921 / Delivery</span>
+                    </div>
+                  </div>
+                  <div class="status-group-right">
+                    <span class="status-badge-styled completed"><i class="bi bi-patch-check"></i> Completed</span>
+                    <span class="status-badge-subtext">Delivered</span>
+                  </div>
+                </div>
+                <div class="date-time-row">
+                  <span>Monday, 29 June 2026</span>
+                  <span class="text-mono">06:19 PM</span>
+                </div>
+                <table class="items-table-styled">
+                  <thead>
+                    <tr>
+                      <th>Items</th>
+                      <th class="text-center-aligned" style="width: 50px;">Qty</th>
+                      <th class="text-right-aligned" style="width: 80px;">Price</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td class="item-name-col">Almond Milk (Unsweetened)</td>
+                      <td class="text-center-aligned text-mono">1</td>
+                      <td class="text-right-aligned text-mono">₱145.00</td>
+                    </tr>
+                  </tbody>
+                </table>
+                <div class="card-footer-styled">
+                  <div class="total-row-styled">
+                    <span class="total-label">Total</span>
+                    <span class="total-amount text-mono">₱145.00</span>
+                  </div>
+                  <div class="card-actions-row">
+                    <button class="btn-card-secondary">See Details</button>
+                    <button class="btn-card-primary completed-btn" disabled>Delivered</button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Card 4 -->
+              <div class="order-card-styled" data-status="progress">
+                <div class="card-header-row">
+                  <div class="header-user-info">
+                    <div class="user-initials-avatar bg-orange">PR</div>
+                    <div class="user-meta">
+                      <h4>Paul Rey</h4>
+                      <span>Order #Fresh-8101 / Delivery</span>
+                    </div>
+                  </div>
+                  <div class="status-group-right">
+                    <span class="status-badge-styled progress"><i class="bi bi-clock-history"></i> In Progress</span>
+                    <span class="status-badge-subtext">Packing cargo</span>
+                  </div>
+                </div>
+                <div class="date-time-row">
+                  <span>Monday, 29 June 2026</span>
+                  <span class="text-mono">06:18 PM</span>
+                </div>
+                <table class="items-table-styled">
+                  <thead>
+                    <tr>
+                      <th>Items</th>
+                      <th class="text-center-aligned" style="width: 50px;">Qty</th>
+                      <th class="text-right-aligned" style="width: 80px;">Price</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td class="item-name-col">Local Wagyu Beef Ribeye (0.5 kg)</td>
+                      <td class="text-center-aligned text-mono">1</td>
+                      <td class="text-right-aligned text-mono">₱925.00</td>
+                    </tr>
+                    <tr>
+                      <td class="item-name-col">Organic Bananas (1.0 kg)</td>
+                      <td class="text-center-aligned text-mono">1</td>
+                      <td class="text-right-aligned text-mono">₱120.00</td>
+                    </tr>
+                  </tbody>
+                </table>
+                <div class="card-footer-styled">
+                  <div class="total-row-styled">
+                    <span class="total-label">Total</span>
+                    <span class="total-amount text-mono">₱1,045.00</span>
+                  </div>
+                  <div class="card-actions-row">
+                    <button class="btn-card-secondary">See Details</button>
+                    <button class="btn-card-primary action-dispatch-btn" data-order-id="Fresh-8101">Dispatch</button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Card 5 -->
+              <div class="order-card-styled" data-status="completed">
+                <div class="card-header-row">
+                  <div class="header-user-info">
+                    <div class="user-initials-avatar bg-purple">MB</div>
+                    <div class="user-meta">
+                      <h4>Maja Becker</h4>
+                      <span>Order #Fresh-8312 / Delivery</span>
+                    </div>
+                  </div>
+                  <div class="status-group-right">
+                    <span class="status-badge-styled completed"><i class="bi bi-patch-check"></i> Completed</span>
+                    <span class="status-badge-subtext">Delivered</span>
+                  </div>
+                </div>
+                <div class="date-time-row">
+                  <span>Monday, 29 June 2026</span>
+                  <span class="text-mono">05:32 PM</span>
+                </div>
+                <table class="items-table-styled">
+                  <thead>
+                    <tr>
+                      <th>Items</th>
+                      <th class="text-center-aligned" style="width: 50px;">Qty</th>
+                      <th class="text-right-aligned" style="width: 80px;">Price</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td class="item-name-col">Gourmet Sourdough Bread</td>
+                      <td class="text-center-aligned text-mono">2</td>
+                      <td class="text-right-aligned text-mono">₱320.00</td>
+                    </tr>
+                    <tr>
+                      <td class="item-name-col">Premium Whole Milk (1 Unit)</td>
+                      <td class="text-center-aligned text-mono">1</td>
+                      <td class="text-right-aligned text-mono">₱99.00</td>
+                    </tr>
+                  </tbody>
+                </table>
+                <div class="card-footer-styled">
+                  <div class="total-row-styled">
+                    <span class="total-label">Total</span>
+                    <span class="total-amount text-mono">₱419.00</span>
+                  </div>
+                  <div class="card-actions-row">
+                    <button class="btn-card-secondary">See Details</button>
+                    <button class="btn-card-primary completed-btn" disabled>Delivered</button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Card 6 -->
+              <div class="order-card-styled" data-status="completed">
+                <div class="card-header-row">
+                  <div class="header-user-info">
+                    <div class="user-initials-avatar bg-teal">ER</div>
+                    <div class="user-meta">
+                      <h4>Erwan Richard</h4>
+                      <span>Order #Fresh-8408 / Delivery</span>
+                    </div>
+                  </div>
+                  <div class="status-group-right">
+                    <span class="status-badge-styled completed"><i class="bi bi-patch-check"></i> Completed</span>
+                    <span class="status-badge-subtext">Delivered</span>
+                  </div>
+                </div>
+                <div class="date-time-row">
+                  <span>Monday, 29 June 2026</span>
+                  <span class="text-mono">05:20 PM</span>
+                </div>
+                <table class="items-table-styled">
+                  <thead>
+                    <tr>
+                      <th>Items</th>
+                      <th class="text-center-aligned" style="width: 50px;">Qty</th>
+                      <th class="text-right-aligned" style="width: 80px;">Price</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td class="item-name-col">Fresh Hass Avocados (2.0 kg)</td>
+                      <td class="text-center-aligned text-mono">1</td>
+                      <td class="text-right-aligned text-mono">₱580.00</td>
+                    </tr>
+                    <tr>
+                      <td class="item-name-col">Organic Bananas (1.5 kg)</td>
+                      <td class="text-center-aligned text-mono">1</td>
+                      <td class="text-right-aligned text-mono">₱180.00</td>
+                    </tr>
+                  </tbody>
+                </table>
+                <div class="card-footer-styled">
+                  <div class="total-row-styled">
+                    <span class="total-label">Total</span>
+                    <span class="total-amount text-mono">₱760.00</span>
+                  </div>
+                  <div class="card-actions-row">
+                    <button class="btn-card-secondary">See Details</button>
+                    <button class="btn-card-primary completed-btn" disabled>Delivered</button>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </section>
+        
+      </div>
+    </main>
+
+  </div>
+
+  <!-- Order Dispatch Engine Slide-in Drawer -->
+  <div class="drawer-overlay" id="dispatch-drawer-overlay">
+    <div class="drawer-card" id="dispatch-drawer-card">
+      <div class="drawer-header">
+        <div class="header-title-group">
+          <div class="card-header-icon"><i class="bi bi-send"></i></div>
+          <div>
+            <h2>Order Dispatch Engine</h2>
+            <p>Generate customer orders and configure transit routes</p>
+          </div>
+        </div>
+        <button class="btn-close-drawer" id="btn-close-drawer">
+          <i class="bi bi-x-lg"></i>
+        </button>
+      </div>
+      <div class="drawer-body">
+        <form id="order-form" class="control-form" onsubmit="event.preventDefault();">
+          <div class="form-group">
+            <label for="order-product">Select Cargo Item</label>
+            <select id="order-product" required>
+              <option value="PROD-01">Premium Whole Milk (₱99.00)</option>
+              <option value="PROD-02">Organic Bananas (₱120.00)</option>
+              <option value="PROD-04">Almond Milk (Unsweetened) (₱145.00)</option>
+              <option value="PROD-07">Fresh Hass Avocados (₱290.00)</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="order-qty">Order Qty (units/kg)</label>
+            <input type="number" id="order-qty" min="0.1" step="0.1" value="1" required>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="order-lat">Latitude</label>
+              <input type="number" id="order-lat" min="-90" max="90" step="0.0001" placeholder="14.6200" required>
+            </div>
+
+            <div class="form-group">
+              <label for="order-lng">Longitude</label>
+              <input type="number" id="order-lng" min="-180" max="180" step="0.0001" placeholder="121.0500" required>
+            </div>
+          </div>
+          
+          <div class="alert-box info-alert-box" style="margin-top: 1rem; margin-bottom: 1.5rem;">
+            <i class="bi bi-question-circle"></i>
+            <span>Coordinates can be manually configured to dispatch mock cargo to client sites.</span>
+          </div>
+
+          <button type="submit" class="btn btn-primary btn-full">
+            <i class="bi bi-cursor"></i> Dispatch Delivery
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Theme Toggle & Grid Filter Script -->
+  <script>
+    // Theme toggle handling
+    document.getElementById('theme-toggle').addEventListener('change', (e) => {
+      if (e.target.checked) {
+        localStorage.setItem('theme', 'dark');
+        document.body.classList.add('dark-mode');
+      } else {
+        localStorage.setItem('theme', 'light');
+        document.body.classList.remove('dark-mode');
+      }
+    });
+
+    // Populate current local date on load
+    const dateOptions = { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' };
+    document.getElementById('live-date').innerText = new Date().toLocaleDateString('en-US', dateOptions);
+
+    // Drawer opening and closing logic
+    const openBtn = document.getElementById('btn-open-dispatch-form');
+    const closeBtn = document.getElementById('btn-close-drawer');
+    const overlay = document.getElementById('dispatch-drawer-overlay');
+    const card = document.getElementById('dispatch-drawer-card');
+
+    openBtn.addEventListener('click', () => {
+      overlay.classList.add('open');
+    });
+
+    const closeDrawer = () => {
+      overlay.classList.remove('open');
+    };
+
+    closeBtn.addEventListener('click', closeDrawer);
+    overlay.addEventListener('click', (e) => {
+      if (e.target === overlay) {
+        closeDrawer();
+      }
+    });
+
+    // Grid Status Filtering
+    const chips = document.querySelectorAll('.chip');
+    const cards = document.querySelectorAll('.order-card-styled');
+
+    chips.forEach((chip) => {
+      chip.addEventListener('click', () => {
+        // Toggle active styling
+        chips.forEach((c) => c.classList.remove('active'));
+        chip.classList.add('active');
+
+        // Apply filter to grid elements
+        const filterVal = chip.getAttribute('data-filter');
+        cards.forEach((card) => {
+          if (filterVal === 'all') {
+            card.style.display = 'flex';
+          } else {
+            const cardStatus = card.getAttribute('data-status');
+            if (cardStatus === filterVal) {
+              card.style.display = 'flex';
+            } else {
+              card.style.display = 'none';
+            }
+          }
+        });
+      });
+    });
+
+    // Dispatch button interaction simulation
+    const dispatchBtns = document.querySelectorAll('.action-dispatch-btn');
+    dispatchBtns.forEach((btn) => {
+      btn.addEventListener('click', (e) => {
+        const orderCard = e.currentTarget.closest('.order-card-styled');
+        
+        // Find badge and text nodes inside the target order card
+        const badge = orderCard.querySelector('.status-badge-styled');
+        const badgeText = orderCard.querySelector('.status-badge-subtext');
+        
+        // Update states: if it was ready, dispatch it. If it was in progress, complete it.
+        const currentStatus = orderCard.getAttribute('data-status');
+        if (currentStatus === 'ready') {
+          orderCard.setAttribute('data-status', 'progress');
+          badge.className = 'status-badge-styled progress';
+          badge.innerHTML = '<i class="bi bi-clock-history"></i> In Progress';
+          badgeText.innerText = 'Packing cargo';
+          e.currentTarget.innerText = 'Deliver';
+        } else if (currentStatus === 'progress') {
+          orderCard.setAttribute('data-status', 'completed');
+          badge.className = 'status-badge-styled completed';
+          badge.innerHTML = '<i class="bi bi-patch-check"></i> Completed';
+          badgeText.innerText = 'Delivered';
+          
+          // Disable button
+          e.currentTarget.disabled = true;
+          e.currentTarget.className = 'btn-card-primary completed-btn';
+          e.currentTarget.innerText = 'Delivered';
+        }
+
+        // Retrigger filter active state visual matching
+        const activeFilter = document.querySelector('.chip.active').getAttribute('data-filter');
+        if (activeFilter !== 'all' && activeFilter !== orderCard.getAttribute('data-status')) {
+          orderCard.style.display = 'none';
+        }
+      });
+    });
+
+    // Simple search filtering
+    const searchInput = document.getElementById('order-search');
+    searchInput.addEventListener('input', (e) => {
+      const query = e.target.value.toLowerCase().trim();
+      cards.forEach((card) => {
+        const name = card.querySelector('.user-meta h4').innerText.toLowerCase();
+        const orderId = card.querySelector('.user-meta span').innerText.toLowerCase();
+        if (name.includes(query) || orderId.includes(query)) {
+          card.style.display = 'flex';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    });
+  </script>
+</body>
+</html>

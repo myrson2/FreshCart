@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FreshCart - Warehouse & Logistics Control Center</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Roboto+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Bootstrap Icons (CSS-only) -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="styles/style.css">
+  <link rel="stylesheet" href="styles/dashboard.css">
+</head>
+<body>
+  <!-- Hidden Radio States for Tab Switching -->
+  <input type="radio" name="app-tab" id="tab-dashboard" class="tab-radio-state" checked style="display: none;">
+  <input type="radio" name="app-tab" id="tab-inventory" class="tab-radio-state" style="display: none;">
+  <input type="radio" name="app-tab" id="tab-order" class="tab-radio-state" style="display: none;">
+  
+  <!-- Hidden Checkbox for Theme Toggle -->
+  <input type="checkbox" id="theme-toggle" class="theme-checkbox-state" style="display: none;">
+  <script>
+    if (localStorage.getItem('theme') === 'dark') {
+      document.getElementById('theme-toggle').checked = true;
+      document.body.classList.add('dark-mode');
+    }
+  </script>
+
+  <!-- Main App Layout Wrapper -->
+  <div class="app-layout">
+    
+    <!-- Left Sidebar Navigation -->
+    <aside class="app-sidebar">
+      <div class="sidebar-header">
+        <div class="brand-logo">
+          <i class="bi bi-cart3"></i>
+        </div>
+        <div class="brand-info">
+          <h2>FreshCart</h2>
+          <span>Warehouse Operations</span>
+        </div>
+      </div>
+      
+      <!-- Navigation Menu -->
+      <nav class="sidebar-menu">
+        <a class="menu-item" href="dashboard.html" id="nav-dashboard">
+          <i class="bi bi-grid-1x2"></i>
+          <span>Dashboard</span>
+        </a>
+        <a class="menu-item" href="inventory.html" id="nav-inventory">
+          <i class="bi bi-box-seam"></i>
+          <span>Inventory</span>
+        </a>
+        <a class="menu-item" href="order.html" id="nav-order">
+          <i class="bi bi-bag"></i>
+          <span>Order</span>
+        </a>
+      </nav>
+      
+      <!-- Sidebar Footer User Profile -->
+      <div class="sidebar-footer">
+        <div class="user-profile">
+          <div class="user-avatar">
+            <span>JB</span>
+            <span class="user-status-dot online"></span>
+          </div>
+          <div class="user-details">
+            <h4>Jose Myrson</h4>
+            <p>Operations Lead</p>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+      
+      <!-- Top Header Bar -->
+      <header class="header-bar">
+        <div class="header-title-group">
+          <div class="title-dashboard-only">
+            <h1>Dashboard</h1>
+            <p>Real-time status of stocks and dispatches</p>
+          </div>
+          <div class="title-inventory-only">
+            <h1>Inventory</h1>
+            <p>Physical catalog controls and freshness states</p>
+          </div>
+          <div class="title-order-only">
+            <h1>Order Dispatch Engine</h1>
+            <p>Fulfill queue dispatches and track routes</p>
+          </div>
+        </div>
+        
+        <div class="header-actions">
+          <div class="status-indicator">
+            <span class="status-dot"></span>
+            <span class="status-text">LIVE SYNCED</span>
+          </div>
+          
+          <div class="system-time text-mono">
+            <i class="bi bi-clock"></i>
+            <span id="live-time">22:45:00</span>
+          </div>
+          
+          <!-- Mockup circular header controls -->
+          <div class="header-controls">
+            <label class="circle-btn" for="theme-toggle" id="btn-theme-toggle" title="Toggle Light/Dark Theme" style="cursor: pointer;">
+              <i class="bi bi-sun sun-icon"></i>
+              <i class="bi bi-moon moon-icon" style="display: none;"></i>
+            </label>
+            <button class="circle-btn" id="btn-alerts-toggle" title="System Warnings Dashboard">
+              <i class="bi bi-bell"></i>
+              <span class="btn-badge" id="alerts-count">2</span>
+            </button>
+            <button class="circle-btn" id="btn-settings-toggle" title="Control Settings">
+              <i class="bi bi-gear"></i>
+            </button>
+            <div class="profile-circle" title="User Profile">
+              <img src="https://api.dicebear.com/7.x/bottts/svg?seed=FreshCart" alt="User Profile">
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- Views Content Container -->
+      <div class="view-container">
+        
+        <!-- ==================== VIEW 1: DASHBOARD ==================== -->
+        <section id="view-dashboard" class="app-view">
+          
+          <!-- Summary/KPI Cards row -->
+          <div class="kpi-row">
+            <!-- Revenue Card -->
+            <div class="kpi-card" id="kpi-revenue">
+              <div class="kpi-card-inner">
+                <div class="kpi-icon revenue-accent">
+                  <i class="bi bi-cash-stack"></i>
+                </div>
+                <div class="kpi-content">
+                  <span class="kpi-label">Revenue</span>
+                  <h2 class="kpi-value text-mono" id="val-revenue">₱643.00</h2>
+                </div>
+              </div>
+              <div class="kpi-footer">
+                <span class="kpi-trend positive">
+                  <i class="bi bi-arrow-up-right"></i> +8.2%
+                </span>
+                <span class="kpi-subtext">Delivered cargo sales</span>
+              </div>
+            </div>
+
+            <!-- Stocks Card -->
+            <div class="kpi-card" id="kpi-stocks">
+              <div class="kpi-card-inner">
+                <div class="kpi-icon stocks-accent">
+                  <i class="bi bi-boxes"></i>
+                </div>
+                <div class="kpi-content">
+                  <span class="kpi-label">Stocks</span>
+                  <h2 class="kpi-value text-mono" id="val-stocks">102.3 Units</h2>
+                </div>
+              </div>
+              <div class="kpi-footer">
+                <span class="kpi-trend neutral">
+                  <i class="bi bi-activity"></i> Catalog
+                </span>
+                <span class="kpi-subtext">Total active inventory level</span>
+              </div>
+            </div>
+
+            <!-- Active Orders Card -->
+            <div class="kpi-card" id="kpi-dispatches">
+              <div class="kpi-card-inner">
+                <div class="kpi-icon dispatches-accent">
+                  <i class="bi bi-truck"></i>
+                </div>
+                <div class="kpi-content">
+                  <span class="kpi-label">Active Orders</span>
+                  <h2 class="kpi-value text-mono" id="val-dispatches">2 Active</h2>
+                </div>
+              </div>
+              <div class="kpi-footer">
+                <span class="kpi-trend warning">
+                  <i class="bi bi-clock"></i> En Route
+                </span>
+                <span class="kpi-subtext">Dispatches out for delivery</span>
+              </div>
+            </div>
+
+            <!-- Stock Warning Card -->
+            <div class="kpi-card pulse-alert" id="kpi-warnings">
+              <div class="kpi-card-inner">
+                <div class="kpi-icon warnings-accent">
+                  <i class="bi bi-exclamation-triangle"></i>
+                </div>
+                <div class="kpi-content">
+                  <span class="kpi-label">Stock Warning</span>
+                  <h2 class="kpi-value text-mono" id="val-warnings">2 Alerts</h2>
+                </div>
+              </div>
+              <div class="kpi-footer">
+                <span class="kpi-trend critical">
+                  <i class="bi bi-exclamation-octagon"></i> Critical Check
+                </span>
+                <span class="kpi-subtext">Low stock or expired products</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Dashboard Main Two Column Grid -->
+          <div class="dashboard-grid">
+            
+            <!-- Left Column: Transactions & Activity -->
+            <div class="grid-column dashboard-left">
+              <!-- Recent Transactions Card -->
+              <section class="dashboard-card recent-transactions-card">
+                <div class="card-header">
+                  <div class="header-title-group">
+                    <div class="card-header-icon"><i class="bi bi-clock-history"></i></div>
+                    <div>
+                      <h2>Recent Transactions</h2>
+                      <p>Latest fulfillment updates from queue</p>
+                    </div>
+                  </div>
+                  <a class="btn btn-secondary btn-sm" href="order.html" style="cursor: pointer; text-decoration: none;">
+                    View Orders Panel <i class="bi bi-chevron-right"></i>
+                  </a>
+                </div>
+                
+                <div class="table-container recent-orders-container">
+                  <table class="recent-orders-table">
+                    <thead>
+                      <tr>
+                        <th>Order ID</th>
+                        <th>Product</th>
+                        <th>Qty</th>
+                        <th>Price</th>
+                        <th>Status</th>
+                      </tr>
+                    </thead>
+                    <tbody id="dashboard-recent-orders-tbody">
+                      <tr>
+                        <td><span class="text-mono">Fresh-8290</span></td>
+                        <td>Organic Bananas</td>
+                        <td class="text-mono">2.5</td>
+                        <td class="text-mono">₱300.00</td>
+                        <td><span class="status-badge-inline pending">Pending</span></td>
+                      </tr>
+                      <tr>
+                        <td><span class="text-mono">Fresh-7411</span></td>
+                        <td>Premium Whole Milk</td>
+                        <td class="text-mono">2.0</td>
+                        <td class="text-mono">₱198.00</td>
+                        <td><span class="status-badge-inline dispatched">Dispatched</span></td>
+                      </tr>
+                      <tr>
+                        <td><span class="text-mono">Fresh-9921</span></td>
+                        <td>Almond Milk (Unsweetened)</td>
+                        <td class="text-mono">1.0</td>
+                        <td class="text-mono">₱145.00</td>
+                        <td><span class="status-badge-inline delivered">Delivered</span></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </section>
+
+              <!-- Recent Activities (Timeline Logs) -->
+              <section class="dashboard-card timeline-card">
+                <div class="card-header">
+                  <div class="header-title-group">
+                    <div class="card-header-icon"><i class="bi bi-terminal"></i></div>
+                    <div>
+                      <h2>Recent Activities</h2>
+                      <p>Real-time system telemetry and transaction log</p>
+                    </div>
+                  </div>
+                  <button id="btn-clear-logs" class="btn btn-text" style="pointer-events: none; opacity: 0.5;">Console Online</button>
+                </div>
+                <div class="terminal-container">
+                  <div class="terminal-body text-mono" id="terminal-logs">
+                    <div class="log-entry"><span class="log-time">[22:40:12]</span> <span class="log-system">[SYSTEM]</span> Hydrated warehouse catalog state: 7 items active.</div>
+                    <div class="log-entry"><span class="log-time">[22:40:15]</span> <span class="log-stock">[STOCK]</span> 'Fresh Romaine Lettuce' stock is currently flagged. [EXPIRED]</div>
+                    <div class="log-entry"><span class="log-time">[22:41:02]</span> <span class="log-stock">[STOCK]</span> 'Local Wagyu Beef Ribeye' stock dropped to 2.8 kg. [LOW STOCK ALERT]</div>
+                    <div class="log-entry"><span class="log-time">[22:42:00]</span> <span class="log-dispatch">[DISPATCH]</span> Created Order #Fresh-8290 at Coord [14.6212, 121.0505].</div>
+                    <div class="log-entry"><span class="log-time">[22:43:18]</span> <span class="log-dispatch">[DISPATCH]</span> Created Order #Fresh-7411 at Coord [14.6050, 121.0210].</div>
+                    <div class="log-entry"><span class="log-time">[22:44:00]</span> <span class="log-dispatch">[DISPATCH]</span> Created Order #Fresh-9921 at Coord [14.6320, 121.0780].</div>
+                  </div>
+                </div>
+              </section>
+            </div>
+
+            <!-- Right Column: Mockup Map -->
+            <div class="grid-column dashboard-right">
+              <section class="dashboard-card map-card flex-grow-card">
+                <div class="card-header">
+                  <div class="header-title-group">
+                    <div class="card-header-icon"><i class="bi bi-geo-alt"></i></div>
+                    <div>
+                      <h2>Logistics Map View</h2>
+                      <p>Visualization of active orders and QC dispatch hub routes</p>
+                    </div>
+                  </div>
+                  <div class="map-legend">
+                    <span class="legend-item"><span class="legend-dot color-indigo"></span> Dispatched</span>
+                    <span class="legend-item"><span class="legend-dot color-emerald"></span> Delivered</span>
+                  </div>
+                </div>
+                
+                <div class="map-viewport-wrapper">
+                  <div id="map-viewport" class="static-map">
+                    <svg viewBox="0 0 800 450" class="map-svg" xmlns="http://www.w3.org/2000/svg">
+                      <!-- Grid background -->
+                      <defs>
+                        <pattern id="map-grid" width="20" height="20" patternUnits="userSpaceOnUse">
+                          <path d="M 20 0 L 0 0 0 20" fill="none" stroke="var(--border-color)" stroke-width="0.5" opacity="0.3"/>
+                        </pattern>
+                      </defs>
+                      <rect width="100%" height="100%" fill="url(#map-grid)" />
+                      
+                      <!-- Connection Routes -->
+                      <path class="route-line dispatched" d="M 400 225 L 320 280" stroke="var(--secondary-indigo)" stroke-width="2" stroke-dasharray="4 4" fill="none" />
+                      <path class="route-line delivered" d="M 400 225 L 510 180" stroke="var(--primary-emerald)" stroke-width="2" stroke-dasharray="4 4" fill="none" />
+                      <path class="route-line pending" d="M 400 225 L 430 290" stroke="var(--warning-amber)" stroke-width="2" stroke-dasharray="4 4" fill="none" />
+                      
+                      <!-- Central Warehouse Marker -->
+                      <circle cx="400" cy="225" r="8" fill="var(--primary-emerald)" opacity="0.3" class="warehouse-pulse-ring" />
+                      <circle cx="400" cy="225" r="5" fill="var(--primary-emerald)" stroke="#ffffff" stroke-width="1.5" />
+                      <text x="400" y="210" class="map-label center-label" text-anchor="middle">Central Hub (QC)</text>
+                      
+                      <!-- Route Node 1: Dispatched -->
+                      <g class="map-node">
+                        <circle cx="320" cy="280" r="10" fill="var(--secondary-indigo)" opacity="0.2" class="node-pulse-ring" />
+                        <circle cx="320" cy="280" r="4" fill="var(--secondary-indigo)" stroke="#ffffff" stroke-width="1.5" />
+                        <text x="320" y="300" class="map-label" text-anchor="middle">Fresh-7411 (Dispatched)</text>
+                      </g>
+                      
+                      <!-- Route Node 2: Delivered -->
+                      <g class="map-node">
+                        <circle cx="510" cy="180" r="10" fill="var(--primary-emerald)" opacity="0.2" class="node-pulse-ring" />
+                        <circle cx="510" cy="180" r="4" fill="var(--primary-emerald)" stroke="#ffffff" stroke-width="1.5" />
+                        <text x="510" y="165" class="map-label" text-anchor="middle">Fresh-9921 (Delivered)</text>
+                      </g>
+                      
+                      <!-- Route Node 3: Pending -->
+                      <g class="map-node">
+                        <circle cx="430" cy="290" r="10" fill="var(--warning-amber)" opacity="0.2" class="node-pulse-ring" />
+                        <circle cx="430" cy="290" r="4" fill="var(--warning-amber)" stroke="#ffffff" stroke-width="1.5" />
+                        <text x="430" y="310" class="map-label" text-anchor="middle">Fresh-8290 (Pending)</text>
+                      </g>
+                    </svg>
+                  </div>
+                  <div class="map-instructions">
+                    <i class="bi bi-info-circle"></i> Map view is static in boilerplate mode. Click events are deactivated.
+                  </div>
+                </div>
+              </section>
+            </div>
+            
+          </div>
+        </section>
+
+      </div>
+    </main>
+
+  </div>
+
+  <!-- Theme Toggle Persistence Script -->
+  <script>
+    document.getElementById('theme-toggle').addEventListener('change', (e) => {
+      if (e.target.checked) {
+        localStorage.setItem('theme', 'dark');
+        document.body.classList.add('dark-mode');
+      } else {
+        localStorage.setItem('theme', 'light');
+        document.body.classList.remove('dark-mode');
+      }
+    });
+  </script>
+</body>
+</html>
