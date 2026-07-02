@@ -25,12 +25,6 @@
   
   <!-- Hidden Checkbox for Theme Toggle -->
   <input type="checkbox" id="theme-toggle" class="theme-checkbox-state" style="display: none;">
-  <script>
-    if (localStorage.getItem('theme') === 'dark') {
-      document.getElementById('theme-toggle').checked = true;
-      document.body.classList.add('dark-mode');
-    }
-  </script>
 
   <!-- Main App Layout Wrapper -->
   <div class="app-layout">
@@ -167,9 +161,11 @@
 
               <!-- Active Filter Tags Row -->
               <div class="active-filters-row">
-                <span class="active-filter-title">Status:</span>
-                <span class="filter-tag">Active <i class="bi bi-x close-tag"></i></span>
-                <span class="filter-tag">Out of Stock <i class="bi bi-x close-tag"></i></span>
+                <span class="active-filter-title">Filter:</span>
+                <button class="filter-tag" data-active="true">All</button>
+                <button class="filter-tag" data-active="false">Active</button>
+                <button class="filter-tag" data-active="false">Warning</button>
+                <button class="filter-tag" data-active="false">Out of Stock</button>
               </div>
 
               <!-- Product Table Wrapper -->
@@ -184,40 +180,20 @@
                       <th>Variant</th>
                       <th>Price</th>
                       <th>Status</th>
+                      <th>Quantity</th>
                       <th style="width: 60px; text-align: center;"></th>
                     </tr>
                   </thead>
                   <tbody id="inventory-tbody-styled">
-                    <tr>
+                    <!-- <tr>
                       <td><input type="checkbox" class="product-checkbox"></td>
                       <td>
                         <div class="product-info-cell">
-                          <img class="product-thumbnail" src="https://images.unsplash.com/photo-1550583724-b2692b85b150?w=80&auto=format&fit=crop&q=60" alt="Premium Whole Milk">
-                          <span class="product-name-text">Premium Whole Milk</span>
-                        </div>
-                      </td>
-                      <td><span class="category-badge">PERISHABLE</span></td>
-                      <td class="text-mono sku-cell">PROD-01</td>
-                      <td>
-                        <div class="variant-info">
-                          <span class="variant-count">12 Units</span>
-                          <span class="variant-subtitle">Varies on: Unit</span>
-                        </div>
-                      </td>
-                      <td class="text-mono price-cell">₱99.00</td>
-                      <td><span class="status-pill active">Active</span></td>
-                      <td class="action-cell"><button class="btn-table-action"><i class="bi bi-three-dots"></i></button></td>
-                    </tr>
-                    <tr>
-                      <td><input type="checkbox" class="product-checkbox"></td>
-                      <td>
-                        <div class="product-info-cell">
-                          <img class="product-thumbnail" src="https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?w=80&auto=format&fit=crop&q=60" alt="Organic Bananas">
                           <span class="product-name-text">Organic Bananas</span>
                         </div>
                       </td>
                       <td><span class="category-badge">BULK</span></td>
-                      <td class="text-mono sku-cell">PROD-02</td>
+                      <td class="text-mono product_type">STANDARD</td>
                       <td>
                         <div class="variant-info">
                           <span class="variant-count">45.5 kg</span>
@@ -232,7 +208,6 @@
                       <td><input type="checkbox" class="product-checkbox"></td>
                       <td>
                         <div class="product-info-cell">
-                          <img class="product-thumbnail" src="https://images.unsplash.com/photo-1556801712-76c8eb07bbc9?w=80&auto=format&fit=crop&q=60" alt="Fresh Romaine Lettuce">
                           <span class="product-name-text">Fresh Romaine Lettuce</span>
                         </div>
                       </td>
@@ -247,92 +222,12 @@
                       <td class="text-mono price-cell">₱85.00</td>
                       <td><span class="status-pill out-of-stock">Out of Stock</span></td>
                       <td class="action-cell"><button class="btn-table-action"><i class="bi bi-three-dots"></i></button></td>
-                    </tr>
-                    <tr>
-                      <td><input type="checkbox" class="product-checkbox"></td>
-                      <td>
-                        <div class="product-info-cell">
-                          <img class="product-thumbnail" src="https://images.unsplash.com/photo-1568651343853-219800bad127?w=80&auto=format&fit=crop&q=60" alt="Almond Milk (Unsweetened)">
-                          <span class="product-name-text">Almond Milk (Unsweetened)</span>
-                        </div>
-                      </td>
-                      <td><span class="category-badge">STANDARD</span></td>
-                      <td class="text-mono sku-cell">PROD-04</td>
-                      <td>
-                        <div class="variant-info">
-                          <span class="variant-count">18 Units</span>
-                          <span class="variant-subtitle">Varies on: Unit</span>
-                        </div>
-                      </td>
-                      <td class="text-mono price-cell">₱145.00</td>
-                      <td><span class="status-pill active">Active</span></td>
-                      <td class="action-cell"><button class="btn-table-action"><i class="bi bi-three-dots"></i></button></td>
-                    </tr>
-                    <tr>
-                      <td><input type="checkbox" class="product-checkbox"></td>
-                      <td>
-                        <div class="product-info-cell">
-                          <img class="product-thumbnail" src="https://images.unsplash.com/photo-1603048588665-791ca8aea617?w=80&auto=format&fit=crop&q=60" alt="Local Wagyu Beef Ribeye">
-                          <span class="product-name-text">Local Wagyu Beef Ribeye</span>
-                        </div>
-                      </td>
-                      <td><span class="category-badge">BULK</span></td>
-                      <td class="text-mono sku-cell">PROD-05</td>
-                      <td>
-                        <div class="variant-info">
-                          <span class="variant-count">2.8 kg</span>
-                          <span class="variant-subtitle">Varies on: Weight</span>
-                        </div>
-                      </td>
-                      <td class="text-mono price-cell">₱1,850.00</td>
-                      <td><span class="status-pill out-of-stock">Out of Stock</span></td>
-                      <td class="action-cell"><button class="btn-table-action"><i class="bi bi-three-dots"></i></button></td>
-                    </tr>
-                    <tr>
-                      <td><input type="checkbox" class="product-checkbox"></td>
-                      <td>
-                        <div class="product-info-cell">
-                          <img class="product-thumbnail" src="https://images.unsplash.com/photo-1549931319-a545dcf3bc73?w=80&auto=format&fit=crop&q=60" alt="Gourmet Sourdough Bread">
-                          <span class="product-name-text">Gourmet Sourdough Bread</span>
-                        </div>
-                      </td>
-                      <td><span class="category-badge">PERISHABLE</span></td>
-                      <td class="text-mono sku-cell">PROD-06</td>
-                      <td>
-                        <div class="variant-info">
-                          <span class="variant-count">8 Units</span>
-                          <span class="variant-subtitle">Varies on: Unit</span>
-                        </div>
-                      </td>
-                      <td class="text-mono price-cell">₱160.00</td>
-                      <td><span class="status-pill active">Active</span></td>
-                      <td class="action-cell"><button class="btn-table-action"><i class="bi bi-three-dots"></i></button></td>
-                    </tr>
-                    <tr>
-                      <td><input type="checkbox" class="product-checkbox"></td>
-                      <td>
-                        <div class="product-info-cell">
-                          <img class="product-thumbnail" src="https://images.unsplash.com/photo-1523049673857-eb18f1d7b578?w=80&auto=format&fit=crop&q=60" alt="Fresh Hass Avocados">
-                          <span class="product-name-text">Fresh Hass Avocados</span>
-                        </div>
-                      </td>
-                      <td><span class="category-badge">BULK</span></td>
-                      <td class="text-mono sku-cell">PROD-07</td>
-                      <td>
-                        <div class="variant-info">
-                          <span class="variant-count">15.0 kg</span>
-                          <span class="variant-subtitle">Varies on: Weight</span>
-                        </div>
-                      </td>
-                      <td class="text-mono price-cell">₱290.00</td>
-                      <td><span class="status-pill active">Active</span></td>
-                      <td class="action-cell"><button class="btn-table-action"><i class="bi bi-three-dots"></i></button></td>
-                    </tr>
+                    </tr> -->
                   </tbody>
                 </table>
               </div>
 
-              <!-- Pagination Row -->
+              <!-- Pagination Row
               <div class="pagination-row-styled">
                 <div class="pagination-buttons">
                   <button class="pagination-arrow"><i class="bi bi-chevron-left"></i></button>
@@ -345,7 +240,7 @@
                   <button class="page-number">47</button>
                   <button class="pagination-arrow"><i class="bi bi-chevron-right"></i></button>
                 </div>
-              </div>
+              </div> -->
 
             </section>
           </div>
@@ -410,57 +305,6 @@
     </div>
   </div>
 
-  <!-- Theme Toggle Persistence Script & Interactive Logic -->
-  <script>
-    // Theme toggle handling
-    document.getElementById('theme-toggle').addEventListener('change', (e) => {
-      if (e.target.checked) {
-        localStorage.setItem('theme', 'dark');
-        document.body.classList.add('dark-mode');
-      } else {
-        localStorage.setItem('theme', 'light');
-        document.body.classList.remove('dark-mode');
-      }
-    });
-
-    // Drawer opening and closing logic
-    const openBtn = document.getElementById('btn-open-add-form');
-    const closeBtn = document.getElementById('btn-close-drawer');
-    const overlay = document.getElementById('product-drawer-overlay');
-    const card = document.getElementById('product-drawer-card');
-
-    openBtn.addEventListener('click', () => {
-      overlay.classList.add('open');
-    });
-
-    const closeDrawer = () => {
-      overlay.classList.remove('open');
-    };
-
-    closeBtn.addEventListener('click', closeDrawer);
-    overlay.addEventListener('click', (e) => {
-      if (e.target === overlay) {
-        closeDrawer();
-      }
-    });
-
-    // Checkbox select all logic
-    const checkAll = document.getElementById('check-all-products');
-    const checkboxes = document.querySelectorAll('.product-checkbox');
-
-    checkAll.addEventListener('change', (e) => {
-      checkboxes.forEach((cb) => {
-        cb.checked = e.target.checked;
-      });
-    });
-
-    // Close tag dismissal logic
-    const closeTags = document.querySelectorAll('.close-tag');
-    closeTags.forEach((tag) => {
-      tag.addEventListener('click', (e) => {
-        e.currentTarget.parentElement.remove();
-      });
-    });
-  </script>
+  <script type="module" src="javascript/app.js"></script>
 </body>
 </html>

@@ -30,8 +30,9 @@
         "sizeChartLink": "images/clothing-size-chart.png",
         "quantity": 4,
         "status": "WARNING",
-        "productType": "STANDARD",
-        "_comment": "Standard cargo stock unit"
+        "productType": "PERISHABLE",
+        "_comment": "Converted to Perishable item",
+        "expirationDate": "2026-07-25"
     },
     {
         "id": "54e0eccd-8f36-462b-b68a-8182611d9add",
@@ -62,8 +63,9 @@
         "priceCents": 3499,
         "quantity": 15,
         "status": "ACTIVE",
-        "productType": "STANDARD",
-        "_comment": "Standard cargo stock unit"
+        "productType": "BULK",
+        "_comment": "Converted to Bulk item",
+        "weightPerUnit": 1.5
     },
     {
         "id": "dd82ca78-a18b-4e2a-9250-31e67412f98d",
@@ -94,8 +96,9 @@
         "priceCents": 2899,
         "quantity": 44,
         "status": "ACTIVE",
-        "productType": "STANDARD",
-        "_comment": "Standard cargo stock unit"
+        "productType": "PERISHABLE",
+        "_comment": "Converted to Perishable item",
+        "expirationDate": "2026-07-25"
     },
     {
         "id": "58b4fc92-e98c-42aa-8c55-b6b79996769a",
@@ -128,8 +131,9 @@
         "priceCents": 1560,
         "quantity": 2,
         "status": "WARNING",
-        "productType": "STANDARD",
-        "_comment": "Standard cargo stock unit"
+        "productType": "BULK",
+        "_comment": "Converted to Bulk item",
+        "weightPerUnit": 1.5
     },
     {
         "id": "04701903-bc79-49c6-bc11-1af7e3651358",
@@ -160,8 +164,9 @@
         "priceCents": 1699,
         "quantity": 39,
         "status": "ACTIVE",
-        "productType": "STANDARD",
-        "_comment": "Standard cargo stock unit"
+        "productType": "PERISHABLE",
+        "_comment": "Converted to Perishable item",
+        "expirationDate": "2026-07-25"
     },
     {
         "id": "c2a82c5e-aff4-435f-9975-517cfaba2ece",
@@ -192,8 +197,9 @@
         "priceCents": 2200,
         "quantity": 14,
         "status": "ACTIVE",
-        "productType": "STANDARD",
-        "_comment": "Standard cargo stock unit"
+        "productType": "BULK",
+        "_comment": "Converted to Bulk item",
+        "weightPerUnit": 1.5
     },
     {
         "id": "e4f64a65-1377-42bc-89a5-e572d19252e2",
@@ -226,8 +232,9 @@
         "priceCents": 1250,
         "quantity": 0,
         "status": "OUT OF STOCK",
-        "productType": "STANDARD",
-        "_comment": "Standard cargo stock unit"
+        "productType": "PERISHABLE",
+        "_comment": "Converted to Perishable item",
+        "expirationDate": "2026-07-25"
     },
     {
         "id": "4f4fbcc2-4e72-45cc-935c-9e13d79cc57f",
@@ -235,7 +242,7 @@
         "name": "Women's Knit Ballet Flat",
         "priceCents": 2640,
         "quantity": 3,
-        "status": "Warning",
+        "status": "WARNING",
         "productType": "PERISHABLE",
         "expirationDate": "2026-07-21",
         "_comment": "Fresh perishable goods, expires on 2026-07-21"
@@ -260,8 +267,9 @@
         "priceCents": 8300,
         "quantity": 25,
         "status": "ACTIVE",
-        "productType": "STANDARD",
-        "_comment": "Standard cargo stock unit"
+        "productType": "BULK",
+        "_comment": "Converted to Bulk item",
+        "weightPerUnit": 1.5
     },
     {
         "id": "19c6a64a-5463-4d45-9af8-e41140a4100c",
@@ -292,8 +300,9 @@
         "priceCents": 2290,
         "quantity": 17,
         "status": "ACTIVE",
-        "productType": "STANDARD",
-        "_comment": "Standard cargo stock unit"
+        "productType": "PERISHABLE",
+        "_comment": "Converted to Perishable item",
+        "expirationDate": "2026-07-25"
     },
     {
         "id": "1c079479-8586-494f-ab53-219325432536",
@@ -324,8 +333,9 @@
         "priceCents": 6797,
         "quantity": 36,
         "status": "ACTIVE",
-        "productType": "STANDARD",
-        "_comment": "Standard cargo stock unit"
+        "productType": "BULK",
+        "_comment": "Converted to Bulk item",
+        "weightPerUnit": 1.5
     },
     {
         "id": "a434b69f-1bc1-482d-9ce7-cd7f4a66ce8d",
@@ -356,8 +366,9 @@
         "priceCents": 2400,
         "quantity": 3,
         "status": "WARNING",
-        "productType": "STANDARD",
-        "_comment": "Standard cargo stock unit"
+        "productType": "PERISHABLE",
+        "_comment": "Converted to Perishable item",
+        "expirationDate": "2026-07-25"
     },
     {
         "id": "d37a651a-d501-483b-aae6-a9659b0757a0",
@@ -388,8 +399,9 @@
         "priceCents": 3099,
         "quantity": 47,
         "status": "ACTIVE",
-        "productType": "STANDARD",
-        "_comment": "Standard cargo stock unit"
+        "productType": "BULK",
+        "_comment": "Converted to Bulk item",
+        "weightPerUnit": 1.5
     },
     {
         "id": "8a53b080-6d40-4a65-ab26-b24ecf700bce",
@@ -420,8 +432,9 @@
         "priceCents": 10747,
         "quantity": 33,
         "status": "ACTIVE",
-        "productType": "STANDARD",
-        "_comment": "Standard cargo stock unit"
+        "productType": "PERISHABLE",
+        "_comment": "Converted to Perishable item",
+        "expirationDate": "2026-07-25"
     },
     {
         "id": "36c64692-677f-4f58-b5ec-0dc2cf109e27",
@@ -452,7 +465,8 @@
         "priceCents": 2400,
         "quantity": 1,
         "status": "WARNING",
-        "productType": "STANDARD",
-        "_comment": "Standard cargo stock unit"
+        "productType": "BULK",
+        "_comment": "Converted to Bulk item",
+        "weightPerUnit": 1.5
     }
 ]

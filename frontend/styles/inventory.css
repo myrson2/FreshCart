@@ -141,7 +141,8 @@
 /* Product Catalog Table */
 .table-container {
   width: 100%;
-  overflow-x: auto;
+  height: calc(100vh - 300px);
+  overflow-y: auto;
 }
 
 .inventory-table {
@@ -408,7 +409,13 @@
   color: var(--text-secondary);
   padding: 0.25rem 0.5rem;
   border-radius: 6px;
-  font-weight: 600;
+  font-weight: normal;
+  font-size: .80rem;
+}
+
+.filter-tag[data-active="true"] {
+  background-color: var(--secondary-indigo);
+  color: white;
 }
 
 .close-tag {
@@ -486,7 +493,7 @@
   letter-spacing: 0.03em;
 }
 
-.sku-cell {
+.product_type {
   font-weight: 600;
   font-size: 0.8125rem;
 }
@@ -524,24 +531,36 @@
   text-transform: capitalize;
 }
 
-.status-pill.active {
+.status-pill[data-status="ACTIVE"] {
   background-color: #dcfce7;
   color: #15803d;
 }
 
-body.dark-mode .status-pill.active {
+body.dark-mode .status-pill[data-status="ACTIVE"] {
   background-color: rgba(22, 163, 74, 0.15);
   color: #4ade80;
 }
 
-.status-pill.out-of-stock {
+.status-pill[data-status="OUT OF STOCK"] {
   background-color: #fee2e2;
   color: #b91c1c;
 }
 
-body.dark-mode .status-pill.out-of-stock {
+body.dark-mode .status-pill[data-status="OUT OF STOCK"] {
   background-color: rgba(220, 38, 38, 0.15);
   color: #f87171;
+}
+
+/* 🟡 Light Mode: Amber Warning */
+.status-pill[data-status="WARNING"] {
+  background-color: #fef3c7; /* Soft amber/yellow tint */
+  color: #b45309;            /* Deep amber text for readability */
+}
+
+/* 🌙 Dark Mode: Glowing Translucent Gold Warning */
+body.dark-mode .status-pill[data-status="WARNING"] {
+  background-color: rgba(245, 158, 11, 0.15); /* 15% Amber opacity opacity */
+  color: #fbbf24;                             /* Bright amber text */
 }
 
 .btn-table-action {
