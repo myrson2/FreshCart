@@ -25,12 +25,6 @@
   
   <!-- Hidden Checkbox for Theme Toggle -->
   <input type="checkbox" id="theme-toggle" class="theme-checkbox-state" style="display: none;">
-  <script>
-    if (localStorage.getItem('theme') === 'dark') {
-      document.getElementById('theme-toggle').checked = true;
-      document.body.classList.add('dark-mode');
-    }
-  </script>
 
   <!-- Main App Layout Wrapper -->
   <div class="app-layout">
@@ -393,6 +387,6 @@
 
   </div>
 
-   <script type="module" src="javascript/access/dashboard.js"></script>
+   <script type="module" src="javascript/app.js"></script>
 </body>
 </html>

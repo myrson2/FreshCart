@@ -235,7 +235,7 @@
         "name": "Women's Knit Ballet Flat",
         "priceCents": 2640,
         "quantity": 3,
-        "status": "Warning",
+        "status": "WARNING",
         "productType": "PERISHABLE",
         "expirationDate": "2026-07-21",
         "_comment": "Fresh perishable goods, expires on 2026-07-21"
