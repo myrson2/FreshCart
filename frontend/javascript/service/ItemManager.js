@@ -12,50 +12,26 @@ export default class ItemManager {
      * Retrieves all products from the repository and converts them to their rich OOP model instances.
      * @returns {Array<Items|PerishableItems|BulkItems>}
      */
-
-    getItemRepository() {
-        return this.itemRepository;
-    }
     
     getAllProducts() {
         const rawProducts = this.itemRepository.getRawProducts();
+
         return rawProducts.map(p => {
-            const productType = (p.productType || '').toUpperCase();
-            if (productType === 'PERISHABLE') {
-                // p.SKU =  `PRD-${Math.floor(100000 + Math.random() * 900)}`;
-                return new PerishableItems(
-                    p.id,
-                    p.image,
-                    p.name,
-                    p.priceCents,
-                    p.quantity,
-                    p.status,
-                    productType,
-                    p.expirationDate || p.expiryDate
-                );
-            } else if (productType === 'BULK') {
-                return new BulkItems(
-                    p.id,
-                    p.image,
-                    p.name,
-                    p.priceCents,
-                    p.quantity,
-                    p.status,
-                    productType,
-                    p.weightPerUnit
-                );
-            } else {
-                return new Items(
-                    p.id,
-                    p.image,
-                    p.name,
-                    p.priceCents,
-                    p.quantity,
-                    p.status,
-                    productType || 'STANDARD'
-                );
+            // Unpack the properties cleanly out of the product object wrapper
+            const { name, priceCents, quantity, status, productType, expirationDate, weightPerUnit } = p;
+            const normalizedType = (productType || '').toUpperCase();
+
+            if (normalizedType === 'PERISHABLE') {
+                return new PerishableItems(name, priceCents, quantity, status, productType, expirationDate);
             }
-        });
+            
+            if (normalizedType === 'BULK') {
+                return new BulkItems(name, priceCents, quantity, status, productType, weightPerUnit);
+            }
+
+            // Always provide a fallback return statement to keep data streams unbroken
+            return null; 
+        }).filter(item => item !== null); // This line automatically filters out any corrupted or broken items!
     }
 
     /**
@@ -125,7 +101,7 @@ export default class ItemManager {
         const product = products.find(p => p.id === id);
         if (product) {
             product.quantity = Math.max(0, product.quantity + amount);
-            getItemRepository().saveRawProducts(products);
+            this.itemRepository.saveRawProducts(products);
             return true;
         }
         return false;
@@ -137,7 +113,7 @@ export default class ItemManager {
      * @returns {boolean} Whether deletion was successful
      */
     deleteProduct(id) {
-        const products = getItemRepository().getRawProducts();
+        const products = this.itemRepository.getRawProducts();
         const filtered = products.filter(p => p.id !== id);
         if (filtered.length !== products.length) {
             getItemRepository().saveRawProducts(filtered);

@@ -1,3 +1,6 @@
+import BulkItems from "../model/BulkItems.js";
+import PerishableItems from "../model/PerishableItems.js";
+
 export default class ItemRepository {
     constructor(storageKey = 'inventory', jsonUrl = './data/json/products.json') {
         this.storageKey = storageKey;
@@ -28,11 +31,29 @@ export default class ItemRepository {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
             const products = await response.json();
-            products.forEach(prd => {
-                prd.SKU = `PRD-${Math.floor(100 + Math.random() * 900)}`;
-                this.products.push(prd);
+            let items = null;
+            products.forEach(product => {
+                if(product.productType === 'PERISHABLE') {
+                    items = new PerishableItems(
+                        product.name,
+                        product.priceCents,
+                        product.quantity,
+                        product.status,
+                        product.productType,
+                        product.expirationDate
+                    );
+                } else if (product.productType === 'BULK') {
+                    items = new BulkItems(
+                        product.name,
+                        product.priceCents,
+                        product.quantity,
+                        product.status,
+                        product.productType,
+                        product.weightPerUnit
+                    );
+                }
+                this.saveRawProducts(items);
             });
-            this.saveRawProducts(products);
         } catch (error) {
             console.error("Failed to fetch initial products:", error);
             this.products = [];
@@ -44,7 +65,7 @@ export default class ItemRepository {
     }
 
     saveRawProducts(products) {
-        this.products = products;
-        localStorage.setItem(this.storageKey, JSON.stringify(products));
+        this.products.push(products);
+        localStorage.setItem(this.storageKey, JSON.stringify(this.products));
     }
 }

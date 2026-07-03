@@ -1,8 +1,8 @@
 import Items from './Items.js';
 
 export default class PerishableItems extends Items {
-    constructor(id, image, name, priceCents, quantity, status, productType, expiryDate) {
-        super(id, image, name, priceCents, quantity, status, productType);
+    constructor(name, priceCents, quantity, status, productType, expiryDate) {
+        super(name, priceCents, quantity, status, productType);
         this.expiryDate = new Date(expiryDate);
     }
 

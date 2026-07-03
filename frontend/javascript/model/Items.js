@@ -1,7 +1,7 @@
 export default class Items {
-    constructor(id, image, name, priceCents, quantity, status, productType) {
-        this.id = id;
-        this.image = image;
+    constructor(name, priceCents, quantity, status, productType) {
+        this.id = crypto.randomUUID();
+        this.SKU = `PRD-${Math.floor(100 + Math.random() * 900)}`;
         this.name = name;
         this.priceCents = priceCents;
         this.quantity = quantity;
@@ -19,7 +19,7 @@ export default class Items {
                 return this.quantity += amount;
             }
        } catch (error) {
-            return error;
+            return `[Error]: ${error}`;
        }
     }
 }

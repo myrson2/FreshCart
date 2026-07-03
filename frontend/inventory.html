@@ -282,7 +282,7 @@
             
             <div class="form-group">
               <label for="prod-qty">Quantity</label>
-              <input type="number" id="prod-qty" min="0.1" step="0.1" placeholder="10" required>
+              <input type="number" id="prod-qty" min="10" step="0.1" placeholder="10" required>
             </div>
           </div>
           
@@ -290,14 +290,32 @@
             <div class="form-group">
               <label for="prod-type">Subtype</label>
               <select id="prod-type" required>
-                <option value="standard">Standard Goods</option>
+                <option value="" disabled>Type of Product</option>
                 <option value="perishable">Perishable Goods</option>
                 <option value="bulk">Bulk Produce</option>
               </select>
             </div>
           </div>
+
+          <div id="perishable-fields" class="hidden">
+            <div class="form-row">
+              <div class="form-group">
+                <label for="perishable-attribute">Expiration Date</label>
+                <input type="date" id="perishable-attribute">
+              </div>
+            </div>
+          </div>
+
+           <div id="bulk-fields" class="hidden">
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="bulk-attribute">Weight Per Unit (kg)</label>
+                  <input type="number" id="bulk-attribute" step="0.01" min="0" placeholder="0.00">
+                </div>
+              </div>
+            </div>
           
-          <button type="submit" class="btn btn-primary btn-full" style="margin-top: 1.5rem;">
+          <button type="submit" id="commit-btn-stock" class="btn btn-primary btn-full" style="margin-top: 1.5rem;">
             <i class="bi bi-check-circle"></i> Commit Stock
           </button>
         </form>
