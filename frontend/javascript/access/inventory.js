@@ -13,7 +13,6 @@ export function renderInventory(ItemManager) {
       const products = ItemManager.getAllProducts();
 
       products.forEach(prd => {
-        console.log(prd);
         let tableRows;
         if(prd instanceof PerishableItems) {
            tableRows = `
@@ -28,7 +27,7 @@ export function renderInventory(ItemManager) {
               <td><span class="category-badge">${prd.SKU}</span></td>
               <td>
                 <div class="variant-info">
-                  <span class="variant-count">${prd.expiryDate}</span>
+                  <span class="variant-count">${prd.expiryDate.toLocaleDateString()}</span>
                   <span class="variant-subtitle">Varies on: Expiration</span>
                 </div>
               </td>
@@ -138,12 +137,33 @@ export function renderInventory(ItemManager) {
     }
   })
 
-  document.querySelector("#commit-btn-stock").addEventListener('click', (e) => {
-      if(prod_type.value === 'perishable'){
-        const perishableItems = new PerishableItems();
-      } else {
-
+  document.querySelector("#stock-form").addEventListener('submit', (e) => {
+    e.preventDefault();
+      try {
+        let product = null;
+        if(document.getElementById('prod-type').value.toUpperCase() === 'PERISHABLE') {
+          product = new PerishableItems(
+            document.getElementById('prod-name').value,
+            document.getElementById('prod-price').value,
+            Math.round(Number(document.getElementById('prod-price').value || 0) * 100),
+            document.getElementById('prod-type').value.toUpperCase(),
+            document.getElementById('perishable-attribute').value
+          );
+        }
+        if(document.getElementById('prod-type').value.toUpperCase() === 'BULK') {
+          product = new BulkItems(
+            document.getElementById('prod-name').value,
+            document.getElementById('prod-price').value,
+            Math.round(Number(document.getElementById('prod-price').value || 0) * 100),
+            document.getElementById('prod-type').value.toUpperCase(),
+            document.getElementById('bulk-attribute').value
+          );
+        }
+        console.log(product);
+        ItemManager.addProduct(product);
+      } catch (error) {
+        console.error(error);
       }
-  })
+  });
 }
 

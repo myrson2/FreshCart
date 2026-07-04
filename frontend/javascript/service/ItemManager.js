@@ -18,15 +18,17 @@ export default class ItemManager {
 
         return rawProducts.map(p => {
             // Unpack the properties cleanly out of the product object wrapper
-            const { name, priceCents, quantity, status, productType, expirationDate, weightPerUnit } = p;
+           const { name, priceCents, quantity, productType, expirationDate, expiryDate, weightPerUnit } = p;
+            const dateVal = expiryDate || expirationDate;
+
             const normalizedType = (productType || '').toUpperCase();
 
             if (normalizedType === 'PERISHABLE') {
-                return new PerishableItems(name, priceCents, quantity, status, productType, expirationDate);
+                return new PerishableItems(name, priceCents, quantity, productType, dateVal);
             }
             
             if (normalizedType === 'BULK') {
-                return new BulkItems(name, priceCents, quantity, status, productType, weightPerUnit);
+                return new BulkItems(name, priceCents, quantity, productType, weightPerUnit);
             }
 
             // Always provide a fallback return statement to keep data streams unbroken
@@ -65,29 +67,9 @@ export default class ItemManager {
      */
     addProduct(productData) {
         const products = this.itemRepository.getRawProducts();
-        
-        // Ensure money values are handled strictly in centavos (integers)
-        const priceCents = Math.round(Number(productData.price || 0) * 100);
-
-        const newProduct = {
-            id: productData.id || crypto.randomUUID(),
-            image: productData.image || 'https://images.unsplash.com/photo-1557804506-669a67965ba0?w=80&auto=format&fit=crop&q=60',
-            name: productData.name,
-            priceCents: priceCents,
-            quantity: Number(productData.quantity || 0),
-            status: productData.status || 'ACTIVE',
-            productType: (productData.productType || 'STANDARD').toUpperCase(),
-        };
-
-        if (newProduct.productType === 'PERISHABLE') {
-            newProduct.expirationDate = productData.expiryDate || productData.expirationDate;
-        } else if (newProduct.productType === 'BULK') {
-            newProduct.weightPerUnit = Number(productData.weightPerUnit || 1);
-        }
-
-        products.push(newProduct);
+        products.push(productData);
         this.itemRepository.saveRawProducts(products);
-        return newProduct;
+        return productData;
     }
 
     /**

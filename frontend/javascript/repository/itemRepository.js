@@ -31,6 +31,7 @@ export default class ItemRepository {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
             const products = await response.json();
+            let temp_storage = [];
             let items = null;
             products.forEach(product => {
                 if(product.productType === 'PERISHABLE') {
@@ -38,7 +39,6 @@ export default class ItemRepository {
                         product.name,
                         product.priceCents,
                         product.quantity,
-                        product.status,
                         product.productType,
                         product.expirationDate
                     );
@@ -47,13 +47,13 @@ export default class ItemRepository {
                         product.name,
                         product.priceCents,
                         product.quantity,
-                        product.status,
                         product.productType,
                         product.weightPerUnit
                     );
                 }
-                this.saveRawProducts(items);
+                temp_storage.push(items);
             });
+            this.saveRawProducts(temp_storage);
         } catch (error) {
             console.error("Failed to fetch initial products:", error);
             this.products = [];
@@ -65,7 +65,7 @@ export default class ItemRepository {
     }
 
     saveRawProducts(products) {
-        this.products.push(products);
+        this.products = products;
         localStorage.setItem(this.storageKey, JSON.stringify(this.products));
     }
 }
