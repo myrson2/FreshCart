@@ -1,11 +1,9 @@
 export default class Items {
-    constructor(name, priceCents, quantity, productType) {
-        this.id = crypto.randomUUID();
-        this.SKU = `PRD-${Math.floor(100 + Math.random() * 900)}`;
+    constructor(id, name, priceCents, quantity, productType) {
+        this.id = id ? id : `PRD-${Math.floor(1000 + Math.random() * 9000)}`;
         this.name = name;
         this.priceCents = priceCents;
         this.quantity = quantity;
-        this.status = this.updateStatus();
         this.productType = productType;
     }
 
@@ -21,16 +19,6 @@ export default class Items {
        } catch (error) {
             return `[Error]: ${error}`;
        }
-    }
-
-    updateStatus() {
-        if (this.quantity <= 5) {
-            if (this.quantity === 0){
-                return 'OUT OF STOCK';
-            }
-           return 'WARNING';
-        } 
-        return 'ACTIVE';
     }
 }
 

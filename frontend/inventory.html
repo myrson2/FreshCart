@@ -143,15 +143,29 @@
                     <div class="search-input-wrapper-styled">
                       <i class="bi bi-search search-icon-styled"></i>
                       <input type="text" id="inventory-search-styled" placeholder="Search products...">
-                      <button class="btn-filter-dropdown" id="btn-filters">
-                        Filters <i class="bi bi-chevron-down"></i>
-                      </button>
+                      
+                      <!-- Hidden checkbox to toggle dropdown menu visibility -->
+                      <input type="checkbox" id="dropdown-toggle" class="dropdown-toggle-state" style="display: none;">
+                      
+                      <label for="dropdown-toggle" class="btn-filter-dropdown" id="btn-filters">
+                        Category <i class="bi bi-chevron-down"></i>
+                      </label>
+
+                      <!-- CSS-Only Dropdown Menu -->
+                      <div class="dropdown-menu-styled">
+                        <input type="radio" name="inventory-category-filter" id="cat-all" class="category-radio-state" checked style="display: none;">
+                        <label for="cat-all" class="dropdown-item" >All Categories</label>
+                        
+                        <input type="radio" name="inventory-category-filter" id="cat-perishable" class="category-radio-state" style="display: none;">
+                        <label for="cat-perishable" class="dropdown-item">Perishable Products</label>
+                        
+                        <input type="radio" name="inventory-category-filter" id="cat-bulk" class="category-radio-state" style="display: none;">
+                        <label for="cat-bulk" class="dropdown-item">Bulk Products</label>
+                      </div>
                     </div>
                   </div>
                   <div class="header-action-buttons">
-                    <button class="btn-export">
-                      Export <i class="bi bi-chevron-down"></i>
-                    </button>
+
                     <button class="btn-new-product" id="btn-open-add-form">
                       New product
                     </button>
@@ -161,11 +175,18 @@
 
               <!-- Active Filter Tags Row -->
               <div class="active-filters-row">
-                <span class="active-filter-title">Filter:</span>
-                <button class="filter-tag" data-active="true">All</button>
-                <button class="filter-tag" data-active="false">Active</button>
-                <button class="filter-tag" data-active="false">Warning</button>
-                <button class="filter-tag" data-active="false">Out of Stock</button>
+                <span class="active-filter-title">Status:</span>
+                <input type="radio" name="inventory-filter" id="filter-all" class="filter-radio-state" checked style="display: none;">
+                <label for="filter-all" class="filter-tag">All</label>
+                
+                <input type="radio" name="inventory-filter" id="filter-active" class="filter-radio-state" style="display: none;">
+                <label for="filter-active" class="filter-tag">Active</label>
+                
+                <input type="radio" name="inventory-filter" id="filter-warning" class="filter-radio-state" style="display: none;">
+                <label for="filter-warning" class="filter-tag">Warning</label>
+                
+                <input type="radio" name="inventory-filter" id="filter-out-of-stock" class="filter-radio-state" style="display: none;">
+                <label for="filter-out-of-stock" class="filter-tag">Out of Stock</label>
               </div>
 
               <!-- Product Table Wrapper -->
@@ -174,9 +195,9 @@
                   <thead>
                     <tr>
                       <th style="width: 40px;"><input type="checkbox" id="check-all-products"></th>
+                      <th>ID</th>
                       <th>Product Name</th>
                       <th>Category</th>
-                      <th>SKU</th>
                       <th>Variant</th>
                       <th>Price</th>
                       <th>Status</th>
@@ -282,7 +303,7 @@
             
             <div class="form-group">
               <label for="prod-qty">Quantity</label>
-              <input type="number" id="prod-qty" min="10" step="0.1" placeholder="10" required>
+              <input type="number" id="prod-qty" min="10" step="1" placeholder="10" required>
             </div>
           </div>
           
@@ -317,6 +338,78 @@
           
           <button type="submit" id="commit-btn-stock" class="btn btn-primary btn-full" style="margin-top: 1.5rem;">
             <i class="bi bi-check-circle"></i> Commit Stock
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Centered Edit Product Modal -->
+  <div class="modal-overlay" id="edit-modal-overlay">
+    <div class="modal-card" id="edit-modal-card">
+      <div class="drawer-header">
+        <div class="header-title-group">
+          <div class="card-header-icon" style="color: var(--secondary-indigo);"><i class="bi bi-pencil-square"></i></div>
+          <div>
+            <h2>Edit Product</h2>
+            <p>Update product information and inventory levels</p>
+          </div>
+        </div>
+        <button class="btn-close-drawer" id="btn-close-edit-modal">
+          <i class="bi bi-x-lg"></i>
+        </button>
+      </div>
+      <div class="drawer-body">
+        <form id="edit-stock-form" class="control-form" onsubmit="event.preventDefault();">
+          <input type="hidden" id="edit-prod-id">
+
+          <div class="form-group">
+            <label for="edit-prod-name">Product Name</label>
+            <input type="text" id="edit-prod-name" placeholder="e.g. Premium Whole Milk" required>
+          </div>
+          
+          <div class="form-row">
+            <div class="form-group">
+              <label for="edit-prod-price">Base Price (₱)</label>
+              <input type="number" id="edit-prod-price" min="0.01" step="0.01" placeholder="99.00" required>
+            </div>
+            
+            <div class="form-group">
+              <label for="edit-prod-qty">Quantity</label>
+              <input type="number" id="edit-prod-qty"  min="10" step="1" placeholder="10" required>
+            </div>
+          </div>
+          
+          <div class="form-row">
+            <div class="form-group">
+              <label for="edit-prod-type">Subtype</label>
+              <select id="edit-prod-type" disabled required>
+                <option value="perishable">Perishable Goods</option>
+                <option value="bulk">Bulk Produce</option>
+              </select>
+            </div>
+          </div>
+
+          <div id="edit-perishable-fields" class="hidden">
+            <div class="form-row">
+              <div class="form-group">
+                <label for="edit-perishable-attribute">Expiration Date</label>
+                <input type="date" id="edit-perishable-attribute">
+              </div>
+            </div>
+          </div>
+
+           <div id="edit-bulk-fields" class="hidden">
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="edit-bulk-attribute">Weight Per Unit (kg)</label>
+                  <input type="number" id="edit-bulk-attribute" step="0.01" min="0" placeholder="0.00">
+                </div>
+              </div>
+            </div>
+          
+          <button type="submit" id="edit-commit-btn-stock" class="btn btn-primary btn-full" style="margin-top: 1.5rem; background-color: var(--secondary-indigo);">
+            <i class="bi bi-check-circle"></i> Save Changes
           </button>
         </form>
       </div>

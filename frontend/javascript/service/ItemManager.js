@@ -18,17 +18,17 @@ export default class ItemManager {
 
         return rawProducts.map(p => {
             // Unpack the properties cleanly out of the product object wrapper
-           const { name, priceCents, quantity, productType, expirationDate, expiryDate, weightPerUnit } = p;
+           const {id, name, priceCents, quantity, productType, expirationDate, expiryDate, weightPerUnit } = p;
             const dateVal = expiryDate || expirationDate;
 
             const normalizedType = (productType || '').toUpperCase();
 
             if (normalizedType === 'PERISHABLE') {
-                return new PerishableItems(name, priceCents, quantity, productType, dateVal);
+                return new PerishableItems(id, name, priceCents, quantity, productType, dateVal);
             }
             
             if (normalizedType === 'BULK') {
-                return new BulkItems(name, priceCents, quantity, productType, weightPerUnit);
+                return new BulkItems(id, name, priceCents, quantity, productType, weightPerUnit);
             }
 
             // Always provide a fallback return statement to keep data streams unbroken
@@ -90,6 +90,26 @@ export default class ItemManager {
     }
 
     /**
+     * Updates an existing product details and persists to storage.
+     * @param {string} id
+     * @param {Object} updatedData
+     * @returns {boolean} Whether update was successful
+     */
+    updateProduct(id, updatedData) {
+        const products = this.itemRepository.getRawProducts();
+        const index = products.findIndex(p => p.id === id);
+        if (index !== -1) {
+            products[index] = {
+                ...products[index],
+                ...updatedData
+            };
+            this.itemRepository.saveRawProducts(products);
+            return true;
+        }
+        return false;
+    }
+
+    /**
      * Deletes a product from the catalog.
      * @param {string} id 
      * @returns {boolean} Whether deletion was successful
@@ -98,7 +118,7 @@ export default class ItemManager {
         const products = this.itemRepository.getRawProducts();
         const filtered = products.filter(p => p.id !== id);
         if (filtered.length !== products.length) {
-            getItemRepository().saveRawProducts(filtered);
+            this.itemRepository.saveRawProducts(filtered);
             return true;
         }
         return false;

@@ -36,6 +36,7 @@ export default class ItemRepository {
             products.forEach(product => {
                 if(product.productType === 'PERISHABLE') {
                     items = new PerishableItems(
+                        product.id,
                         product.name,
                         product.priceCents,
                         product.quantity,
@@ -44,6 +45,7 @@ export default class ItemRepository {
                     );
                 } else if (product.productType === 'BULK') {
                     items = new BulkItems(
+                        product.id,
                         product.name,
                         product.priceCents,
                         product.quantity,

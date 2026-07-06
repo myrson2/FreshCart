@@ -407,15 +407,26 @@
   background-color: var(--canvas-bg);
   border: 1px solid var(--border-color);
   color: var(--text-secondary);
-  padding: 0.25rem 0.5rem;
-  border-radius: 6px;
-  font-weight: normal;
-  font-size: .80rem;
+  padding: 0.35rem 0.75rem;
+  border-radius: 8px;
+  font-weight: 500;
+  font-size: 0.80rem;
+  cursor: pointer;
+  transition: var(--transition-smooth);
+  user-select: none;
 }
 
-.filter-tag[data-active="true"] {
+.filter-tag:hover {
+  background-color: var(--sidebar-hover);
+  color: var(--text-primary);
+  border-color: var(--text-muted);
+}
+
+.filter-radio-state:checked + .filter-tag {
   background-color: var(--secondary-indigo);
   color: white;
+  border-color: var(--secondary-indigo);
+  box-shadow: var(--shadow-sm);
 }
 
 .close-tag {
@@ -541,12 +552,12 @@ body.dark-mode .status-pill[data-status="ACTIVE"] {
   color: #4ade80;
 }
 
-.status-pill[data-status="OUT OF STOCK"] {
+.status-pill[data-status="OUT OF STOCK"], .status-pill[data-status="EXPIRED"] {
   background-color: #fee2e2;
   color: #b91c1c;
 }
 
-body.dark-mode .status-pill[data-status="OUT OF STOCK"] {
+body.dark-mode .status-pill[data-status="OUT OF STOCK"], .status-pill[data-status="EXPIRED"] {
   background-color: rgba(220, 38, 38, 0.15);
   color: #f87171;
 }
@@ -561,6 +572,17 @@ body.dark-mode .status-pill[data-status="OUT OF STOCK"] {
 body.dark-mode .status-pill[data-status="WARNING"] {
   background-color: rgba(245, 158, 11, 0.15); /* 15% Amber opacity opacity */
   color: #fbbf24;                             /* Bright amber text */
+}
+
+.action-cell {
+  text-align: center;
+}
+
+.action-buttons-wrapper {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  justify-content: center;
 }
 
 .btn-table-action {
@@ -580,6 +602,16 @@ body.dark-mode .status-pill[data-status="WARNING"] {
 .btn-table-action:hover {
   background-color: var(--border-color);
   color: var(--text-primary);
+}
+
+.btn-table-action.btn-edit:hover {
+  background-color: rgba(59, 130, 246, 0.15);
+  color: #3b82f6;
+}
+
+.btn-table-action.btn-delete:hover {
+  background-color: rgba(239, 68, 68, 0.15);
+  color: #ef4444;
 }
 
 /* Pagination Row */
@@ -701,4 +733,98 @@ body.dark-mode .status-pill[data-status="WARNING"] {
   padding: 1.5rem;
   overflow-y: auto;
   flex-grow: 1;
+}
+
+/* Centered Modal Overlay & Card for Edit Form */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(15, 23, 42, 0.6);
+  backdrop-filter: blur(4px);
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.modal-overlay.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.modal-card {
+  width: 480px;
+  max-width: 90%;
+  max-height: 90vh;
+  background-color: var(--surface-bg);
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.15), 0 8px 10px -6px rgba(0, 0, 0, 0.15);
+  border-radius: 12px;
+  border: 1px solid var(--border-color);
+  display: flex;
+  flex-direction: column;
+  transform: scale(0.95);
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.modal-overlay.open .modal-card {
+  transform: scale(1);
+}
+
+/* Custom CSS-Only Dropdown Menu */
+.dropdown-menu-styled {
+  position: absolute;
+  top: calc(100% + 0.5rem);
+  right: 0;
+  background-color: var(--surface-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  box-shadow: var(--shadow-lg);
+  padding: 0.5rem;
+  width: 180px;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  opacity: 0;
+  transform: translateY(-10px);
+  pointer-events: none;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+/* Open menu when toggle checkbox is checked */
+.dropdown-toggle-state:checked ~ .dropdown-menu-styled {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+/* Style for each dropdown item label */
+.dropdown-item {
+  padding: 0.5rem 0.75rem;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  border-radius: 6px;
+  cursor: pointer;
+  transition: var(--transition-smooth);
+  user-select: none;
+  text-align: left;
+}
+
+.dropdown-item:hover {
+  background-color: var(--sidebar-hover);
+  color: var(--text-primary);
+}
+
+/* Active option indicator styling */
+.category-radio-state:checked + .dropdown-item {
+  background-color: var(--secondary-indigo-light);
+  color: var(--secondary-indigo);
+  font-weight: 600;
 }
