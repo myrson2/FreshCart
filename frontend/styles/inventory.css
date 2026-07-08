@@ -333,6 +333,22 @@
   height: 100%;
 }
 
+select.btn-filter-dropdown {
+  padding-right: 0.5rem;
+  background-color: transparent;
+  color: var(--text-secondary);
+  border: none;
+  border-left: 1px solid var(--border-color);
+  outline: none;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+select.btn-filter-dropdown option {
+  background-color: var(--surface-bg);
+  color: var(--text-primary);
+}
+
 .btn-filter-dropdown:hover {
   color: var(--text-primary);
 }
@@ -445,6 +461,7 @@
   overflow-x: auto;
   margin: 0 -1.5rem;
   padding: 0 1.5rem;
+  position: relative;
 }
 
 .inventory-table-styled {
@@ -776,55 +793,86 @@ body.dark-mode .status-pill[data-status="WARNING"] {
   transform: scale(1);
 }
 
-/* Custom CSS-Only Dropdown Menu */
-.dropdown-menu-styled {
-  position: absolute;
-  top: calc(100% + 0.5rem);
-  right: 0;
-  background-color: var(--surface-bg);
-  border: 1px solid var(--border-color);
+/* Custom dropdown styling removed in favor of native select/option element */
+
+/* Custom spin animation for loading buttons */
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.spin-icon {
+  animation: spin 1s linear infinite;
+  display: inline-block;
+}
+
+/* Premium Toast Notifications */
+.toast-notification {
+  position: fixed;
+  bottom: 24px;
+  right: -320px;
+  background: var(--surface-bg);
+  border-left: 4px solid var(--primary-emerald);
+  color: var(--text-primary);
+  padding: 12px 20px;
   border-radius: 8px;
   box-shadow: var(--shadow-lg);
-  padding: 0.5rem;
-  width: 180px;
-  z-index: 100;
+  border: 1px solid var(--border-color);
+  border-left-width: 4px;
   display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
-  opacity: 0;
-  transform: translateY(-10px);
-  pointer-events: none;
-  transition: opacity 0.2s ease, transform 0.2s ease;
-}
-
-/* Open menu when toggle checkbox is checked */
-.dropdown-toggle-state:checked ~ .dropdown-menu-styled {
-  opacity: 1;
-  transform: translateY(0);
-  pointer-events: auto;
-}
-
-/* Style for each dropdown item label */
-.dropdown-item {
-  padding: 0.5rem 0.75rem;
-  font-size: 0.8125rem;
-  font-weight: 500;
-  color: var(--text-secondary);
-  border-radius: 6px;
-  cursor: pointer;
-  transition: var(--transition-smooth);
-  user-select: none;
-  text-align: left;
-}
-
-.dropdown-item:hover {
-  background-color: var(--sidebar-hover);
-  color: var(--text-primary);
-}
-
-/* Active option indicator styling */
-.category-radio-state:checked + .dropdown-item {
-  background-color: var(--secondary-indigo-light);
-  color: var(--secondary-indigo);
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
   font-weight: 600;
+  z-index: 9999;
+  transition: right 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease;
+  opacity: 0;
 }
+
+.toast-notification.show {
+  right: 24px;
+  opacity: 1;
+}
+
+/* Loading Overlay for centering loading screen */
+.loading-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.75);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+  transition: opacity 0.25s ease, visibility 0.25s ease;
+  visibility: visible;
+  pointer-events: auto; /* Block all interactions, clicks, and scrolls on the table area */
+}
+
+/* Lock container scrollbar when loading overlay is active */
+.full-width-table-container:has(.loading-overlay:not(.hidden)) {
+  overflow-x: hidden;
+}
+
+body.dark-mode .loading-overlay {
+  background-color: rgba(30, 30, 30, 0.75);
+}
+
+.loading-overlay.hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.loading-spinner {
+  width: 48px;
+  height: 48px;
+  border: 4px solid var(--border-color);
+  border-top-color: var(--secondary-indigo);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+

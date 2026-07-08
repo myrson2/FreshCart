@@ -144,24 +144,16 @@
                       <i class="bi bi-search search-icon-styled"></i>
                       <input type="text" id="inventory-search-styled" placeholder="Search products...">
                       
-                      <!-- Hidden checkbox to toggle dropdown menu visibility -->
-                      <input type="checkbox" id="dropdown-toggle" class="dropdown-toggle-state" style="display: none;">
-                      
-                      <label for="dropdown-toggle" class="btn-filter-dropdown" id="btn-filters">
-                        Category <i class="bi bi-chevron-down"></i>
-                      </label>
-
-                      <!-- CSS-Only Dropdown Menu -->
-                      <div class="dropdown-menu-styled">
-                        <input type="radio" name="inventory-category-filter" id="cat-all" class="category-radio-state" checked style="display: none;">
-                        <label for="cat-all" class="dropdown-item" >All Categories</label>
-                        
-                        <input type="radio" name="inventory-category-filter" id="cat-perishable" class="category-radio-state" style="display: none;">
-                        <label for="cat-perishable" class="dropdown-item">Perishable Products</label>
-                        
-                        <input type="radio" name="inventory-category-filter" id="cat-bulk" class="category-radio-state" style="display: none;">
-                        <label for="cat-bulk" class="dropdown-item">Bulk Products</label>
-                      </div>
+                      <!--
+                        Event: change
+                        Handler: handleCategoryFilterChange()
+                        Target: #inventory-category-filter
+                      -->
+                      <select id="inventory-category-filter" class="btn-filter-dropdown">
+                        <option value="ALL" selected>All Categories</option>
+                        <option value="PERISHABLE">Perishable Products</option>
+                        <option value="BULK">Bulk Products</option>
+                      </select>
                     </div>
                   </div>
                   <div class="header-action-buttons">
@@ -176,21 +168,29 @@
               <!-- Active Filter Tags Row -->
               <div class="active-filters-row">
                 <span class="active-filter-title">Status:</span>
-                <input type="radio" name="inventory-filter" id="filter-all" class="filter-radio-state" checked style="display: none;">
+                <input type="radio" name="inventory-filter" id="filter-all" class="filter-radio-state" checked style="display: none;" data-status="ALL">
                 <label for="filter-all" class="filter-tag">All</label>
                 
-                <input type="radio" name="inventory-filter" id="filter-active" class="filter-radio-state" style="display: none;">
+                <input type="radio" name="inventory-filter" id="filter-active" class="filter-radio-state" style="display: none;"  data-status="ACTIVE">
                 <label for="filter-active" class="filter-tag">Active</label>
                 
-                <input type="radio" name="inventory-filter" id="filter-warning" class="filter-radio-state" style="display: none;">
-                <label for="filter-warning" class="filter-tag">Warning</label>
+                <input type="radio" name="inventory-filter" id="filter-warning" class="filter-radio-state" style="display: none;" data-status="WARNING">
+                <label for="filter-warning" class="filter-tag" >Warning</label>
                 
-                <input type="radio" name="inventory-filter" id="filter-out-of-stock" class="filter-radio-state" style="display: none;">
+                <input type="radio" name="inventory-filter" id="filter-out-of-stock" class="filter-radio-state" style="display: none;"  data-status="OUT OF STOCK">
                 <label for="filter-out-of-stock" class="filter-tag">Out of Stock</label>
               </div>
 
               <!-- Product Table Wrapper -->
               <div class="table-container full-width-table-container">
+                <!--
+                  Event: load
+                  Handler: showTableLoader() / hideTableLoader()
+                  Target: #table-loading-overlay
+                -->
+                <div id="table-loading-overlay" class="loading-overlay hidden">
+                  <div class="loading-spinner"></div>
+                </div>
                 <table class="inventory-table-styled">
                   <thead>
                     <tr>
@@ -206,63 +206,9 @@
                     </tr>
                   </thead>
                   <tbody id="inventory-tbody-styled">
-                    <!-- <tr>
-                      <td><input type="checkbox" class="product-checkbox"></td>
-                      <td>
-                        <div class="product-info-cell">
-                          <span class="product-name-text">Organic Bananas</span>
-                        </div>
-                      </td>
-                      <td><span class="category-badge">BULK</span></td>
-                      <td class="text-mono product_type">STANDARD</td>
-                      <td>
-                        <div class="variant-info">
-                          <span class="variant-count">45.5 kg</span>
-                          <span class="variant-subtitle">Varies on: Weight</span>
-                        </div>
-                      </td>
-                      <td class="text-mono price-cell">₱120.00</td>
-                      <td><span class="status-pill active">Active</span></td>
-                      <td class="action-cell"><button class="btn-table-action"><i class="bi bi-three-dots"></i></button></td>
-                    </tr>
-                    <tr>
-                      <td><input type="checkbox" class="product-checkbox"></td>
-                      <td>
-                        <div class="product-info-cell">
-                          <span class="product-name-text">Fresh Romaine Lettuce</span>
-                        </div>
-                      </td>
-                      <td><span class="category-badge">PERISHABLE</span></td>
-                      <td class="text-mono sku-cell">PROD-03</td>
-                      <td>
-                        <div class="variant-info">
-                          <span class="variant-count">3 Units</span>
-                          <span class="variant-subtitle">Varies on: Unit</span>
-                        </div>
-                      </td>
-                      <td class="text-mono price-cell">₱85.00</td>
-                      <td><span class="status-pill out-of-stock">Out of Stock</span></td>
-                      <td class="action-cell"><button class="btn-table-action"><i class="bi bi-three-dots"></i></button></td>
-                    </tr> -->
                   </tbody>
                 </table>
               </div>
-
-              <!-- Pagination Row
-              <div class="pagination-row-styled">
-                <div class="pagination-buttons">
-                  <button class="pagination-arrow"><i class="bi bi-chevron-left"></i></button>
-                  <button class="page-number">1</button>
-                  <button class="page-number active">2</button>
-                  <button class="page-number">3</button>
-                  <button class="page-number">4</button>
-                  <button class="page-number">5</button>
-                  <span class="pagination-dots">...</span>
-                  <button class="page-number">47</button>
-                  <button class="pagination-arrow"><i class="bi bi-chevron-right"></i></button>
-                </div>
-              </div> -->
-
             </section>
           </div>
 
@@ -297,7 +243,7 @@
           
           <div class="form-row">
             <div class="form-group">
-              <label for="prod-price">Base Price (₱)</label>
+              <label for="prod-price">Base Price (₱) In Cents</label>
               <input type="number" id="prod-price" min="0.01" step="0.01" placeholder="99.00" required>
             </div>
             
@@ -370,7 +316,7 @@
           
           <div class="form-row">
             <div class="form-group">
-              <label for="edit-prod-price">Base Price (₱)</label>
+              <label for="edit-prod-price">Base Price (₱) in Cents</label>
               <input type="number" id="edit-prod-price" min="0.01" step="0.01" placeholder="99.00" required>
             </div>
             
@@ -416,6 +362,28 @@
     </div>
   </div>
 
+  <!--
+    JavaScript Handoff Boilerplate:
+    
+    const categoryFilter = document.getElementById('inventory-category-filter');
+    const loadingOverlay = document.getElementById('table-loading-overlay');
+    
+    categoryFilter.addEventListener('change', (event) => {
+      // 1. Show the loading screen
+      loadingOverlay.classList.remove('hidden');
+      
+      const selectedCategory = event.target.value;
+      console.log('Filtering by category:', selectedCategory);
+      
+      // 2. Simulate or execute loading, then hide loader
+      setTimeout(() => {
+        // filter/render logic here
+        
+        // Hide the loading screen
+        loadingOverlay.classList.add('hidden');
+      }, 1500);
+    });
+  -->
   <script type="module" src="javascript/app.js"></script>
 </body>
 </html>
