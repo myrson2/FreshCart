@@ -25,12 +25,6 @@
   
   <!-- Hidden Checkbox for Theme Toggle -->
   <input type="checkbox" id="theme-toggle" class="theme-checkbox-state" style="display: none;">
-  <script>
-    if (localStorage.getItem('theme') === 'dark') {
-      document.getElementById('theme-toggle').checked = true;
-      document.body.classList.add('dark-mode');
-    }
-  </script>
 
   <!-- Main App Layout Wrapper -->
   <div class="app-layout">
@@ -253,6 +247,27 @@
                         <td class="text-mono">₱300.00</td>
                         <td><span class="status-badge-inline pending">Pending</span></td>
                       </tr>
+                       <tr>
+                        <td><span class="text-mono">Fresh-8290</span></td>
+                        <td>Organic Bananas</td>
+                        <td class="text-mono">2.5</td>
+                        <td class="text-mono">₱300.00</td>
+                        <td><span class="status-badge-inline pending">Pending</span></td>
+                      </tr>
+                       <tr>
+                        <td><span class="text-mono">Fresh-8290</span></td>
+                        <td>Organic Bananas</td>
+                        <td class="text-mono">2.5</td>
+                        <td class="text-mono">₱300.00</td>
+                        <td><span class="status-badge-inline pending">Pending</span></td>
+                      </tr>
+                       <tr>
+                        <td><span class="text-mono">Fresh-8290</span></td>
+                        <td>Organic Bananas</td>
+                        <td class="text-mono">2.5</td>
+                        <td class="text-mono">₱300.00</td>
+                        <td><span class="status-badge-inline pending">Pending</span></td>
+                      </tr>
                       <tr>
                         <td><span class="text-mono">Fresh-7411</span></td>
                         <td>Premium Whole Milk</td>
@@ -372,17 +387,6 @@
 
   </div>
 
-  <!-- Theme Toggle Persistence Script -->
-  <script>
-    document.getElementById('theme-toggle').addEventListener('change', (e) => {
-      if (e.target.checked) {
-        localStorage.setItem('theme', 'dark');
-        document.body.classList.add('dark-mode');
-      } else {
-        localStorage.setItem('theme', 'light');
-        document.body.classList.remove('dark-mode');
-      }
-    });
-  </script>
+   <script type="module" src="javascript/app.js"></script>
 </body>
 </html>

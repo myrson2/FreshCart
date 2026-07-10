@@ -1,0 +1,430 @@
+[
+    {
+        "image": "assets/products/athletic-cotton-socks-6-pairs.jpg",
+        "name": "Black and Gray Athletic Cotton Socks - 6 Pairs",
+        "priceCents": 1090,
+        "quantity": 0,
+        "status": "OUT OF STOCK",
+        "productType": "PERISHABLE",
+        "expirationDate": "2026-06-15",
+        "_comment": "Expired perishable goods - critical warning"
+    },
+    {
+        "image": "assets/products/intermediate-composite-basketball.jpg",
+        "name": "Intermediate Size Basketball",
+        "priceCents": 2095,
+        "quantity": 2,
+        "status": "WARNING",
+        "productType": "BULK",
+        "weightPerUnit": 1,
+        "_comment": "Bulk item, weight is 1 kg per pack"
+    },
+    {
+        "image": "assets/products/adults-plain-cotton-tshirt-2-pack-teal.jpg",
+        "name": "Adults Plain Cotton T-Shirt - 2 Pack",
+        "priceCents": 799,
+        "type": "clothing",
+        "sizeChartLink": "images/clothing-size-chart.png",
+        "quantity": 4,
+        "status": "WARNING",
+        "productType": "PERISHABLE",
+        "_comment": "Converted to Perishable item",
+        "expirationDate": "2026-07-25"
+    },
+    {
+        "image": "assets/products/black-2-slot-toaster.jpg",
+        "name": "2 Slot Toaster - Black",
+        "priceCents": 1899,
+        "quantity": 46,
+        "status": "ACTIVE",
+        "productType": "PERISHABLE",
+        "expirationDate": "2026-07-18",
+        "_comment": "Fresh perishable goods, expires on 2026-07-18"
+    },
+    {
+        "image": "assets/products/6-piece-white-dinner-plate-set.jpg",
+        "name": "6 Piece White Dinner Plate Set",
+        "priceCents": 2067,
+        "quantity": 45,
+        "status": "ACTIVE",
+        "productType": "BULK",
+        "weightPerUnit": 2.5,
+        "_comment": "Bulk item, weight is 2.5 kg per pack"
+    },
+    {
+        "image": "assets/products/6-piece-non-stick-baking-set.webp",
+        "name": "6-Piece Nonstick, Carbon Steel Oven Bakeware Baking Set",
+        "priceCents": 3499,
+        "quantity": 15,
+        "status": "ACTIVE",
+        "productType": "BULK",
+        "_comment": "Converted to Bulk item",
+        "weightPerUnit": 1.5
+    },
+    {
+        "image": "assets/products/plain-hooded-fleece-sweatshirt-yellow.jpg",
+        "name": "Plain Hooded Fleece Sweatshirt",
+        "priceCents": 2400,
+        "quantity": 15,
+        "status": "ACTIVE",
+        "productType": "PERISHABLE",
+        "expirationDate": "2026-07-21",
+        "_comment": "Fresh perishable goods, expires on 2026-07-21"
+    },
+    {
+        "image": "assets/products/luxury-tower-set-6-piece.jpg",
+        "name": "Luxury Towel Set - Graphite Gray",
+        "priceCents": 3599,
+        "quantity": 24,
+        "status": "ACTIVE",
+        "productType": "BULK",
+        "weightPerUnit": 0.5,
+        "_comment": "Bulk item, weight is 0.5 kg per pack"
+    },
+    {
+        "image": "assets/products/liquid-laundry-detergent-plain.jpg",
+        "name": "Liquid Laundry Detergent, 110 Loads, 82.5 Fl Oz",
+        "priceCents": 2899,
+        "quantity": 44,
+        "status": "ACTIVE",
+        "productType": "PERISHABLE",
+        "_comment": "Converted to Perishable item",
+        "expirationDate": "2026-07-25"
+    },
+    {
+        "image": "assets/products/knit-athletic-sneakers-gray.jpg",
+        "name": "Waterproof Knit Athletic Sneakers - Gray",
+        "priceCents": 3390,
+        "quantity": 28,
+        "status": "ACTIVE",
+        "productType": "PERISHABLE",
+        "expirationDate": "2026-07-24",
+        "_comment": "Fresh perishable goods, expires on 2026-07-24"
+    },
+    {
+        "image": "assets/products/women-chiffon-beachwear-coverup-black.jpg",
+        "name": "Women's Chiffon Beachwear Cover Up - Black",
+        "priceCents": 2070,
+        "type": "clothing",
+        "sizeChartLink": "images/clothing-size-chart.png",
+        "quantity": 0,
+        "status": "OUT OF STOCK",
+        "productType": "BULK",
+        "weightPerUnit": 2,
+        "_comment": "Bulk item, weight is 2 kg per pack"
+    },
+    {
+        "image": "assets/products/round-sunglasses-black.jpg",
+        "name": "Round Sunglasses",
+        "priceCents": 1560,
+        "quantity": 2,
+        "status": "WARNING",
+        "productType": "BULK",
+        "_comment": "Converted to Bulk item",
+        "weightPerUnit": 1.5
+    },
+    {
+        "image": "assets/products/women-beach-sandals.jpg",
+        "name": "Women's Two Strap Buckle Sandals - Tan",
+        "priceCents": 2499,
+        "quantity": 4,
+        "status": "WARNING",
+        "productType": "PERISHABLE",
+        "expirationDate": "2026-06-15",
+        "_comment": "Expired perishable goods - critical warning"
+    },
+    {
+        "image": "assets/products/blackout-curtain-set-beige.webp",
+        "name": "Blackout Curtains Set 4-Pack - Beige",
+        "priceCents": 4599,
+        "quantity": 46,
+        "status": "ACTIVE",
+        "productType": "BULK",
+        "weightPerUnit": 5,
+        "_comment": "Bulk item, weight is 5 kg per pack"
+    },
+    {
+        "image": "assets/products/men-slim-fit-summer-shorts-gray.jpg",
+        "name": "Men's Slim-Fit Summer Shorts",
+        "priceCents": 1699,
+        "quantity": 39,
+        "status": "ACTIVE",
+        "productType": "PERISHABLE",
+        "_comment": "Converted to Perishable item",
+        "expirationDate": "2026-07-25"
+    },
+    {
+        "image": "assets/products/electric-glass-and-steel-hot-water-kettle.webp",
+        "name": "Electric Glass and Steel Hot Tea Water Kettle - 1.7-Liter",
+        "priceCents": 3074,
+        "quantity": 8,
+        "status": "ACTIVE",
+        "productType": "PERISHABLE",
+        "expirationDate": "2026-07-15",
+        "_comment": "Fresh perishable goods, expires on 2026-07-15"
+    },
+    {
+        "image": "assets/products/facial-tissue-2-ply-18-boxes.jpg",
+        "name": "Ultra Soft Tissue 2-Ply - 18 Box",
+        "priceCents": 2374,
+        "quantity": 13,
+        "status": "ACTIVE",
+        "productType": "BULK",
+        "weightPerUnit": 1.5,
+        "_comment": "Bulk item, weight is 1.5 kg per pack"
+    },
+    {
+        "image": "assets/products/straw-sunhat.webp",
+        "name": "Straw Lifeguard Sun Hat",
+        "priceCents": 2200,
+        "quantity": 14,
+        "status": "ACTIVE",
+        "productType": "BULK",
+        "_comment": "Converted to Bulk item",
+        "weightPerUnit": 1.5
+    },
+    {
+        "image": "assets/products/sky-flower-stud-earrings.webp",
+        "name": "Sterling Silver Sky Flower Stud Earrings",
+        "priceCents": 1799,
+        "quantity": 15,
+        "status": "ACTIVE",
+        "productType": "PERISHABLE",
+        "expirationDate": "2026-07-18",
+        "_comment": "Fresh perishable goods, expires on 2026-07-18"
+    },
+    {
+        "image": "assets/products/women-stretch-popover-hoodie-black.jpg",
+        "name": "Women's Stretch Popover Hoodie",
+        "priceCents": 1374,
+        "type": "clothing",
+        "sizeChartLink": "images/clothing-size-chart.png",
+        "quantity": 19,
+        "status": "ACTIVE",
+        "productType": "BULK",
+        "weightPerUnit": 3,
+        "_comment": "Bulk item, weight is 3 kg per pack"
+    },
+    {
+        "image": "assets/products/bathroom-rug.jpg",
+        "name": "Bathroom Bath Rug Mat 20 x 31 Inch - Grey",
+        "priceCents": 1250,
+        "quantity": 0,
+        "status": "OUT OF STOCK",
+        "productType": "PERISHABLE",
+        "_comment": "Converted to Perishable item",
+        "expirationDate": "2026-07-25"
+    },
+    {
+        "image": "assets/products/women-knit-ballet-flat-black.jpg",
+        "name": "Women's Knit Ballet Flat",
+        "priceCents": 2640,
+        "quantity": 3,
+        "status": "WARNING",
+        "productType": "PERISHABLE",
+        "expirationDate": "2026-07-21",
+        "_comment": "Fresh perishable goods, expires on 2026-07-21"
+    },
+    {
+        "image": "assets/products/men-golf-polo-t-shirt-blue.jpg",
+        "name": "Men's Regular-Fit Quick-Dry Golf Polo Shirt",
+        "priceCents": 1599,
+        "type": "clothing",
+        "sizeChartLink": "images/clothing-size-chart.png",
+        "quantity": 2,
+        "status": "WARNING",
+        "productType": "BULK",
+        "weightPerUnit": 1,
+        "_comment": "Bulk item, weight is 1 kg per pack"
+    },
+    {
+        "image": "assets/products/trash-can-with-foot-pedal-50-liter.jpg",
+        "name": "Trash Can with Foot Pedal - Brushed Stainless Steel",
+        "priceCents": 8300,
+        "quantity": 25,
+        "status": "ACTIVE",
+        "productType": "BULK",
+        "_comment": "Converted to Bulk item",
+        "weightPerUnit": 1.5
+    },
+    {
+        "image": "assets/products/duvet-cover-set-blue-twin.jpg",
+        "name": "Duvet Cover Set with Zipper Closure",
+        "priceCents": 2399,
+        "quantity": 48,
+        "status": "ACTIVE",
+        "productType": "PERISHABLE",
+        "expirationDate": "2026-06-15",
+        "_comment": "Expired perishable goods - critical warning"
+    },
+    {
+        "image": "assets/products/women-chunky-beanie-gray.webp",
+        "name": "Women's Chunky Cable Beanie - Gray",
+        "priceCents": 1250,
+        "quantity": 20,
+        "status": "ACTIVE",
+        "productType": "BULK",
+        "weightPerUnit": 2.5,
+        "_comment": "Bulk item, weight is 2.5 kg per pack"
+    },
+    {
+        "image": "assets/products/men-chino-pants-beige.jpg",
+        "name": "Men's Classic-fit Pleated Chino Pants",
+        "priceCents": 2290,
+        "quantity": 17,
+        "status": "ACTIVE",
+        "productType": "PERISHABLE",
+        "_comment": "Converted to Perishable item",
+        "expirationDate": "2026-07-25"
+    },
+    {
+        "image": "assets/products/men-athletic-shoes-green.jpg",
+        "name": "Men's Athletic Sneaker",
+        "priceCents": 3890,
+        "quantity": 20,
+        "status": "ACTIVE",
+        "productType": "PERISHABLE",
+        "expirationDate": "2026-07-27",
+        "_comment": "Fresh perishable goods, expires on 2026-07-27"
+    },
+    {
+        "image": "assets/products/men-navigator-sunglasses-brown.jpg",
+        "name": "Men's Navigator Sunglasses Pilot",
+        "priceCents": 1690,
+        "quantity": 26,
+        "status": "ACTIVE",
+        "productType": "BULK",
+        "weightPerUnit": 0.5,
+        "_comment": "Bulk item, weight is 0.5 kg per pack"
+    },
+    {
+        "image": "assets/products/non-stick-cooking-set-15-pieces.webp",
+        "name": "Non-Stick Cookware Set, Pots, Pans and Utensils - 15 Pieces",
+        "priceCents": 6797,
+        "quantity": 36,
+        "status": "ACTIVE",
+        "productType": "BULK",
+        "_comment": "Converted to Bulk item",
+        "weightPerUnit": 1.5
+    },
+    {
+        "image": "assets/products/vanity-mirror-silver.jpg",
+        "name": "Vanity Mirror with Heavy Base - Chrome",
+        "priceCents": 1649,
+        "quantity": 0,
+        "status": "OUT OF STOCK",
+        "productType": "PERISHABLE",
+        "expirationDate": "2026-07-15",
+        "_comment": "Fresh perishable goods, expires on 2026-07-15"
+    },
+    {
+        "image": "assets/products/women-french-terry-fleece-jogger-camo.jpg",
+        "name": "Women's Fleece Jogger Sweatpant",
+        "priceCents": 2400,
+        "quantity": 2,
+        "status": "WARNING",
+        "productType": "BULK",
+        "weightPerUnit": 2,
+        "_comment": "Bulk item, weight is 2 kg per pack"
+    },
+    {
+        "image": "assets/products/double-elongated-twist-french-wire-earrings.webp",
+        "name": "Double Oval Twist French Wire Earrings - Gold",
+        "priceCents": 2400,
+        "quantity": 3,
+        "status": "WARNING",
+        "productType": "PERISHABLE",
+        "_comment": "Converted to Perishable item",
+        "expirationDate": "2026-07-25"
+    },
+    {
+        "image": "assets/products/round-airtight-food-storage-containers.jpg",
+        "name": "Round Airtight Food Storage Containers - 5 Piece",
+        "priceCents": 2899,
+        "quantity": 23,
+        "status": "ACTIVE",
+        "productType": "PERISHABLE",
+        "expirationDate": "2026-07-18",
+        "_comment": "Fresh perishable goods, expires on 2026-07-18"
+    },
+    {
+        "image": "assets/products/coffeemaker-with-glass-carafe-black.jpg",
+        "name": "Coffeemaker with Glass Carafe and Reusable Filter - 25 Oz, Black",
+        "priceCents": 2250,
+        "quantity": 36,
+        "status": "ACTIVE",
+        "productType": "BULK",
+        "weightPerUnit": 5,
+        "_comment": "Bulk item, weight is 5 kg per pack"
+    },
+    {
+        "image": "assets/products/blackout-curtains-black.jpg",
+        "name": "Blackout Curtains Set 42 x 84-Inch - Black, 2 Panels",
+        "priceCents": 3099,
+        "quantity": 47,
+        "status": "ACTIVE",
+        "productType": "BULK",
+        "_comment": "Converted to Bulk item",
+        "weightPerUnit": 1.5
+    },
+    {
+        "image": "assets/products/cotton-bath-towels-teal.webp",
+        "name": "100% Cotton Bath Towels - 2 Pack, Light Teal",
+        "priceCents": 2110,
+        "quantity": 35,
+        "status": "ACTIVE",
+        "productType": "PERISHABLE",
+        "expirationDate": "2026-06-15",
+        "_comment": "Expired perishable goods - critical warning"
+    },
+    {
+        "image": "assets/products/knit-athletic-sneakers-pink.webp",
+        "name": "Waterproof Knit Athletic Sneakers - Pink",
+        "priceCents": 3390,
+        "quantity": 17,
+        "status": "ACTIVE",
+        "productType": "BULK",
+        "weightPerUnit": 1.5,
+        "_comment": "Bulk item, weight is 1.5 kg per pack"
+    },
+    {
+        "image": "assets/products/countertop-blender-64-oz.jpg",
+        "name": "Countertop Blender - 64oz, 1400 Watts",
+        "priceCents": 10747,
+        "quantity": 33,
+        "status": "ACTIVE",
+        "productType": "PERISHABLE",
+        "_comment": "Converted to Perishable item",
+        "expirationDate": "2026-07-25"
+    },
+    {
+        "image": "assets/products/floral-mixing-bowl-set.jpg",
+        "name": "10-Piece Mixing Bowl Set with Lids - Floral",
+        "priceCents": 3899,
+        "quantity": 16,
+        "status": "ACTIVE",
+        "productType": "PERISHABLE",
+        "expirationDate": "2026-07-24",
+        "_comment": "Fresh perishable goods, expires on 2026-07-24"
+    },
+    {
+        "image": "assets/products/kitchen-paper-towels-30-pack.jpg",
+        "name": "2-Ply Kitchen Paper Towels - 30 Pack",
+        "priceCents": 5799,
+        "quantity": 0,
+        "status": "OUT OF STOCK",
+        "productType": "BULK",
+        "weightPerUnit": 3,
+        "_comment": "Bulk item, weight is 3 kg per pack"
+    },
+    {
+        "image": "assets/products/men-cozy-fleece-zip-up-hoodie-red.jpg",
+        "name": "Men's Full-Zip Hooded Fleece Sweatshirt",
+        "priceCents": 2400,
+        "quantity": 1,
+        "status": "WARNING",
+        "productType": "BULK",
+        "_comment": "Converted to Bulk item",
+        "weightPerUnit": 1.5
+    }
+]

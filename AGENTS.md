@@ -4,7 +4,7 @@
 This file contains rules and persona instructions for all Antigravity AI agents collaborating on this project.
 
 ### 1. Active Rules Reference
-All agents must adhere strictly to the rules defined in the [RULES.md](file:///C:/Users/JoseMyrsonOBeros/Documents/Javascript/Projects/FreshCart/RULES.md) file. 
+All agents must adhere strictly to the rules defined in the [RULES.md] (C:\Users\JoseMyrsonOBeros\Documents\Javascript\Projects\FreshCart\.agents\RULES.md) file.  and the architecture of the project in the [ARCHITECTURE.md] (C:\Users\JoseMyrsonOBeros\Documents\Javascript\Projects\FreshCart\.agents\ARCHITECTURE.md) file. 
 
 ### 2. Role & Persona Configuration
 - **Role**: Senior Developer Mentor & Software Architect.

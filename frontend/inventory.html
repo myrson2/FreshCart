@@ -25,12 +25,6 @@
   
   <!-- Hidden Checkbox for Theme Toggle -->
   <input type="checkbox" id="theme-toggle" class="theme-checkbox-state" style="display: none;">
-  <script>
-    if (localStorage.getItem('theme') === 'dark') {
-      document.getElementById('theme-toggle').checked = true;
-      document.body.classList.add('dark-mode');
-    }
-  </script>
 
   <!-- Main App Layout Wrapper -->
   <div class="app-layout">
@@ -149,15 +143,21 @@
                     <div class="search-input-wrapper-styled">
                       <i class="bi bi-search search-icon-styled"></i>
                       <input type="text" id="inventory-search-styled" placeholder="Search products...">
-                      <button class="btn-filter-dropdown" id="btn-filters">
-                        Filters <i class="bi bi-chevron-down"></i>
-                      </button>
+                      
+                      <!--
+                        Event: change
+                        Handler: handleCategoryFilterChange()
+                        Target: #inventory-category-filter
+                      -->
+                      <select id="inventory-category-filter" class="btn-filter-dropdown">
+                        <option value="ALL" selected>All Categories</option>
+                        <option value="PERISHABLE">Perishable Products</option>
+                        <option value="BULK">Bulk Products</option>
+                      </select>
                     </div>
                   </div>
                   <div class="header-action-buttons">
-                    <button class="btn-export">
-                      Export <i class="bi bi-chevron-down"></i>
-                    </button>
+
                     <button class="btn-new-product" id="btn-open-add-form">
                       New product
                     </button>
@@ -168,185 +168,47 @@
               <!-- Active Filter Tags Row -->
               <div class="active-filters-row">
                 <span class="active-filter-title">Status:</span>
-                <span class="filter-tag">Active <i class="bi bi-x close-tag"></i></span>
-                <span class="filter-tag">Out of Stock <i class="bi bi-x close-tag"></i></span>
+                <input type="radio" name="inventory-filter" id="filter-all" class="filter-radio-state" checked style="display: none;" data-status="ALL">
+                <label for="filter-all" class="filter-tag">All</label>
+                
+                <input type="radio" name="inventory-filter" id="filter-active" class="filter-radio-state" style="display: none;"  data-status="ACTIVE">
+                <label for="filter-active" class="filter-tag">Active</label>
+                
+                <input type="radio" name="inventory-filter" id="filter-warning" class="filter-radio-state" style="display: none;" data-status="WARNING">
+                <label for="filter-warning" class="filter-tag" >Warning</label>
+                
+                <input type="radio" name="inventory-filter" id="filter-out-of-stock" class="filter-radio-state" style="display: none;"  data-status="OUT OF STOCK">
+                <label for="filter-out-of-stock" class="filter-tag">Out of Stock</label>
               </div>
 
               <!-- Product Table Wrapper -->
               <div class="table-container full-width-table-container">
+                <!--
+                  Event: load
+                  Handler: showTableLoader() / hideTableLoader()
+                  Target: #table-loading-overlay
+                -->
+                <div id="table-loading-overlay" class="loading-overlay hidden">
+                  <div class="loading-spinner"></div>
+                </div>
                 <table class="inventory-table-styled">
                   <thead>
                     <tr>
                       <th style="width: 40px;"><input type="checkbox" id="check-all-products"></th>
+                      <th>ID</th>
                       <th>Product Name</th>
                       <th>Category</th>
-                      <th>SKU</th>
                       <th>Variant</th>
                       <th>Price</th>
                       <th>Status</th>
+                      <th>Quantity</th>
                       <th style="width: 60px; text-align: center;"></th>
                     </tr>
                   </thead>
                   <tbody id="inventory-tbody-styled">
-                    <tr>
-                      <td><input type="checkbox" class="product-checkbox"></td>
-                      <td>
-                        <div class="product-info-cell">
-                          <img class="product-thumbnail" src="https://images.unsplash.com/photo-1550583724-b2692b85b150?w=80&auto=format&fit=crop&q=60" alt="Premium Whole Milk">
-                          <span class="product-name-text">Premium Whole Milk</span>
-                        </div>
-                      </td>
-                      <td><span class="category-badge">PERISHABLE</span></td>
-                      <td class="text-mono sku-cell">PROD-01</td>
-                      <td>
-                        <div class="variant-info">
-                          <span class="variant-count">12 Units</span>
-                          <span class="variant-subtitle">Varies on: Unit</span>
-                        </div>
-                      </td>
-                      <td class="text-mono price-cell">₱99.00</td>
-                      <td><span class="status-pill active">Active</span></td>
-                      <td class="action-cell"><button class="btn-table-action"><i class="bi bi-three-dots"></i></button></td>
-                    </tr>
-                    <tr>
-                      <td><input type="checkbox" class="product-checkbox"></td>
-                      <td>
-                        <div class="product-info-cell">
-                          <img class="product-thumbnail" src="https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?w=80&auto=format&fit=crop&q=60" alt="Organic Bananas">
-                          <span class="product-name-text">Organic Bananas</span>
-                        </div>
-                      </td>
-                      <td><span class="category-badge">BULK</span></td>
-                      <td class="text-mono sku-cell">PROD-02</td>
-                      <td>
-                        <div class="variant-info">
-                          <span class="variant-count">45.5 kg</span>
-                          <span class="variant-subtitle">Varies on: Weight</span>
-                        </div>
-                      </td>
-                      <td class="text-mono price-cell">₱120.00</td>
-                      <td><span class="status-pill active">Active</span></td>
-                      <td class="action-cell"><button class="btn-table-action"><i class="bi bi-three-dots"></i></button></td>
-                    </tr>
-                    <tr>
-                      <td><input type="checkbox" class="product-checkbox"></td>
-                      <td>
-                        <div class="product-info-cell">
-                          <img class="product-thumbnail" src="https://images.unsplash.com/photo-1556801712-76c8eb07bbc9?w=80&auto=format&fit=crop&q=60" alt="Fresh Romaine Lettuce">
-                          <span class="product-name-text">Fresh Romaine Lettuce</span>
-                        </div>
-                      </td>
-                      <td><span class="category-badge">PERISHABLE</span></td>
-                      <td class="text-mono sku-cell">PROD-03</td>
-                      <td>
-                        <div class="variant-info">
-                          <span class="variant-count">3 Units</span>
-                          <span class="variant-subtitle">Varies on: Unit</span>
-                        </div>
-                      </td>
-                      <td class="text-mono price-cell">₱85.00</td>
-                      <td><span class="status-pill out-of-stock">Out of Stock</span></td>
-                      <td class="action-cell"><button class="btn-table-action"><i class="bi bi-three-dots"></i></button></td>
-                    </tr>
-                    <tr>
-                      <td><input type="checkbox" class="product-checkbox"></td>
-                      <td>
-                        <div class="product-info-cell">
-                          <img class="product-thumbnail" src="https://images.unsplash.com/photo-1568651343853-219800bad127?w=80&auto=format&fit=crop&q=60" alt="Almond Milk (Unsweetened)">
-                          <span class="product-name-text">Almond Milk (Unsweetened)</span>
-                        </div>
-                      </td>
-                      <td><span class="category-badge">STANDARD</span></td>
-                      <td class="text-mono sku-cell">PROD-04</td>
-                      <td>
-                        <div class="variant-info">
-                          <span class="variant-count">18 Units</span>
-                          <span class="variant-subtitle">Varies on: Unit</span>
-                        </div>
-                      </td>
-                      <td class="text-mono price-cell">₱145.00</td>
-                      <td><span class="status-pill active">Active</span></td>
-                      <td class="action-cell"><button class="btn-table-action"><i class="bi bi-three-dots"></i></button></td>
-                    </tr>
-                    <tr>
-                      <td><input type="checkbox" class="product-checkbox"></td>
-                      <td>
-                        <div class="product-info-cell">
-                          <img class="product-thumbnail" src="https://images.unsplash.com/photo-1603048588665-791ca8aea617?w=80&auto=format&fit=crop&q=60" alt="Local Wagyu Beef Ribeye">
-                          <span class="product-name-text">Local Wagyu Beef Ribeye</span>
-                        </div>
-                      </td>
-                      <td><span class="category-badge">BULK</span></td>
-                      <td class="text-mono sku-cell">PROD-05</td>
-                      <td>
-                        <div class="variant-info">
-                          <span class="variant-count">2.8 kg</span>
-                          <span class="variant-subtitle">Varies on: Weight</span>
-                        </div>
-                      </td>
-                      <td class="text-mono price-cell">₱1,850.00</td>
-                      <td><span class="status-pill out-of-stock">Out of Stock</span></td>
-                      <td class="action-cell"><button class="btn-table-action"><i class="bi bi-three-dots"></i></button></td>
-                    </tr>
-                    <tr>
-                      <td><input type="checkbox" class="product-checkbox"></td>
-                      <td>
-                        <div class="product-info-cell">
-                          <img class="product-thumbnail" src="https://images.unsplash.com/photo-1549931319-a545dcf3bc73?w=80&auto=format&fit=crop&q=60" alt="Gourmet Sourdough Bread">
-                          <span class="product-name-text">Gourmet Sourdough Bread</span>
-                        </div>
-                      </td>
-                      <td><span class="category-badge">PERISHABLE</span></td>
-                      <td class="text-mono sku-cell">PROD-06</td>
-                      <td>
-                        <div class="variant-info">
-                          <span class="variant-count">8 Units</span>
-                          <span class="variant-subtitle">Varies on: Unit</span>
-                        </div>
-                      </td>
-                      <td class="text-mono price-cell">₱160.00</td>
-                      <td><span class="status-pill active">Active</span></td>
-                      <td class="action-cell"><button class="btn-table-action"><i class="bi bi-three-dots"></i></button></td>
-                    </tr>
-                    <tr>
-                      <td><input type="checkbox" class="product-checkbox"></td>
-                      <td>
-                        <div class="product-info-cell">
-                          <img class="product-thumbnail" src="https://images.unsplash.com/photo-1523049673857-eb18f1d7b578?w=80&auto=format&fit=crop&q=60" alt="Fresh Hass Avocados">
-                          <span class="product-name-text">Fresh Hass Avocados</span>
-                        </div>
-                      </td>
-                      <td><span class="category-badge">BULK</span></td>
-                      <td class="text-mono sku-cell">PROD-07</td>
-                      <td>
-                        <div class="variant-info">
-                          <span class="variant-count">15.0 kg</span>
-                          <span class="variant-subtitle">Varies on: Weight</span>
-                        </div>
-                      </td>
-                      <td class="text-mono price-cell">₱290.00</td>
-                      <td><span class="status-pill active">Active</span></td>
-                      <td class="action-cell"><button class="btn-table-action"><i class="bi bi-three-dots"></i></button></td>
-                    </tr>
                   </tbody>
                 </table>
               </div>
-
-              <!-- Pagination Row -->
-              <div class="pagination-row-styled">
-                <div class="pagination-buttons">
-                  <button class="pagination-arrow"><i class="bi bi-chevron-left"></i></button>
-                  <button class="page-number">1</button>
-                  <button class="page-number active">2</button>
-                  <button class="page-number">3</button>
-                  <button class="page-number">4</button>
-                  <button class="page-number">5</button>
-                  <span class="pagination-dots">...</span>
-                  <button class="page-number">47</button>
-                  <button class="pagination-arrow"><i class="bi bi-chevron-right"></i></button>
-                </div>
-              </div>
-
             </section>
           </div>
 
@@ -387,7 +249,7 @@
             
             <div class="form-group">
               <label for="prod-qty">Quantity</label>
-              <input type="number" id="prod-qty" min="0.1" step="0.1" placeholder="10" required>
+              <input type="number" id="prod-qty" min="10" step="1" placeholder="10" required>
             </div>
           </div>
           
@@ -395,14 +257,32 @@
             <div class="form-group">
               <label for="prod-type">Subtype</label>
               <select id="prod-type" required>
-                <option value="standard">Standard Goods</option>
+                <option value="" disabled selected></option>
                 <option value="perishable">Perishable Goods</option>
                 <option value="bulk">Bulk Produce</option>
               </select>
             </div>
           </div>
+
+          <div id="perishable-fields" class="hidden">
+            <div class="form-row">
+              <div class="form-group">
+                <label for="perishable-attribute">Expiration Date</label>
+                <input type="date" id="perishable-attribute">
+              </div>
+            </div>
+          </div>
+
+           <div id="bulk-fields" class="hidden">
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="bulk-attribute">Weight Per Unit (kg)</label>
+                  <input type="number" id="bulk-attribute" step="0.01" min="0" placeholder="0.00">
+                </div>
+              </div>
+            </div>
           
-          <button type="submit" class="btn btn-primary btn-full" style="margin-top: 1.5rem;">
+          <button type="submit" id="commit-btn-stock" class="btn btn-primary btn-full" style="margin-top: 1.5rem;">
             <i class="bi bi-check-circle"></i> Commit Stock
           </button>
         </form>
@@ -410,57 +290,100 @@
     </div>
   </div>
 
-  <!-- Theme Toggle Persistence Script & Interactive Logic -->
-  <script>
-    // Theme toggle handling
-    document.getElementById('theme-toggle').addEventListener('change', (e) => {
-      if (e.target.checked) {
-        localStorage.setItem('theme', 'dark');
-        document.body.classList.add('dark-mode');
-      } else {
-        localStorage.setItem('theme', 'light');
-        document.body.classList.remove('dark-mode');
-      }
+  <!-- Centered Edit Product Modal -->
+  <div class="modal-overlay" id="edit-modal-overlay">
+    <div class="modal-card" id="edit-modal-card">
+      <div class="drawer-header">
+        <div class="header-title-group">
+          <div class="card-header-icon" style="color: var(--secondary-indigo);"><i class="bi bi-pencil-square"></i></div>
+          <div>
+            <h2>Edit Product</h2>
+            <p>Update product information and inventory levels</p>
+          </div>
+        </div>
+        <button class="btn-close-drawer" id="btn-close-edit-modal">
+          <i class="bi bi-x-lg"></i>
+        </button>
+      </div>
+      <div class="drawer-body">
+        <form id="edit-stock-form" class="control-form" onsubmit="event.preventDefault();">
+          <input type="hidden" id="edit-prod-id">
+
+          <div class="form-group">
+            <label for="edit-prod-name">Product Name</label>
+            <input type="text" id="edit-prod-name" placeholder="e.g. Premium Whole Milk" required>
+          </div>
+          
+          <div class="form-row">
+            <div class="form-group">
+              <label for="edit-prod-price">Base Price (₱)</label>
+              <input type="number" id="edit-prod-price" min="0.01" step="0.01" placeholder="99.00" required>
+            </div>
+            
+            <div class="form-group">
+              <label for="edit-prod-qty">Quantity</label>
+              <input type="number" id="edit-prod-qty"  min="10" step="1" placeholder="10" required>
+            </div>
+          </div>
+          
+          <div class="form-row">
+            <div class="form-group">
+              <label for="edit-prod-type">Subtype</label>
+              <select id="edit-prod-type" disabled required>
+                <option value="perishable">Perishable Goods</option>
+                <option value="bulk">Bulk Produce</option>
+              </select>
+            </div>
+          </div>
+
+          <div id="edit-perishable-fields" class="hidden">
+            <div class="form-row">
+              <div class="form-group">
+                <label for="edit-perishable-attribute">Expiration Date</label>
+                <input type="date" id="edit-perishable-attribute">
+              </div>
+            </div>
+          </div>
+
+           <div id="edit-bulk-fields" class="hidden">
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="edit-bulk-attribute">Weight Per Unit (kg)</label>
+                  <input type="number" id="edit-bulk-attribute" step="0.01" min="0" placeholder="0.00">
+                </div>
+              </div>
+            </div>
+          
+          <button type="submit" id="edit-commit-btn-stock" class="btn btn-primary btn-full" style="margin-top: 1.5rem; background-color: var(--secondary-indigo);">
+            <i class="bi bi-check-circle"></i> Save Changes
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!--
+    JavaScript Handoff Boilerplate:
+    
+    const categoryFilter = document.getElementById('inventory-category-filter');
+    const loadingOverlay = document.getElementById('table-loading-overlay');
+    
+    categoryFilter.addEventListener('change', (event) => {
+      // 1. Show the loading screen
+      loadingOverlay.classList.remove('hidden');
+      
+      const selectedCategory = event.target.value;
+      console.log('Filtering by category:', selectedCategory);
+      
+      // 2. Simulate or execute loading, then hide loader
+      setTimeout(() => {
+        // filter/render logic here
+        
+        // Hide the loading screen
+        loadingOverlay.classList.add('hidden');
+      }, 1500);
     });
-
-    // Drawer opening and closing logic
-    const openBtn = document.getElementById('btn-open-add-form');
-    const closeBtn = document.getElementById('btn-close-drawer');
-    const overlay = document.getElementById('product-drawer-overlay');
-    const card = document.getElementById('product-drawer-card');
-
-    openBtn.addEventListener('click', () => {
-      overlay.classList.add('open');
-    });
-
-    const closeDrawer = () => {
-      overlay.classList.remove('open');
-    };
-
-    closeBtn.addEventListener('click', closeDrawer);
-    overlay.addEventListener('click', (e) => {
-      if (e.target === overlay) {
-        closeDrawer();
-      }
-    });
-
-    // Checkbox select all logic
-    const checkAll = document.getElementById('check-all-products');
-    const checkboxes = document.querySelectorAll('.product-checkbox');
-
-    checkAll.addEventListener('change', (e) => {
-      checkboxes.forEach((cb) => {
-        cb.checked = e.target.checked;
-      });
-    });
-
-    // Close tag dismissal logic
-    const closeTags = document.querySelectorAll('.close-tag');
-    closeTags.forEach((tag) => {
-      tag.addEventListener('click', (e) => {
-        e.currentTarget.parentElement.remove();
-      });
-    });
-  </script>
+  -->
+  <script type="module" src="javascript/app.js"></script>
 </body>
 </html>

@@ -141,7 +141,8 @@
 /* Product Catalog Table */
 .table-container {
   width: 100%;
-  overflow-x: auto;
+  height: calc(100vh - 300px);
+  overflow-y: auto;
 }
 
 .inventory-table {
@@ -332,6 +333,22 @@
   height: 100%;
 }
 
+select.btn-filter-dropdown {
+  padding-right: 0.5rem;
+  background-color: transparent;
+  color: var(--text-secondary);
+  border: none;
+  border-left: 1px solid var(--border-color);
+  outline: none;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+select.btn-filter-dropdown option {
+  background-color: var(--surface-bg);
+  color: var(--text-primary);
+}
+
 .btn-filter-dropdown:hover {
   color: var(--text-primary);
 }
@@ -406,9 +423,26 @@
   background-color: var(--canvas-bg);
   border: 1px solid var(--border-color);
   color: var(--text-secondary);
-  padding: 0.25rem 0.5rem;
-  border-radius: 6px;
-  font-weight: 600;
+  padding: 0.35rem 0.75rem;
+  border-radius: 8px;
+  font-weight: 500;
+  font-size: 0.80rem;
+  cursor: pointer;
+  transition: var(--transition-smooth);
+  user-select: none;
+}
+
+.filter-tag:hover {
+  background-color: var(--sidebar-hover);
+  color: var(--text-primary);
+  border-color: var(--text-muted);
+}
+
+.filter-radio-state:checked + .filter-tag {
+  background-color: var(--secondary-indigo);
+  color: white;
+  border-color: var(--secondary-indigo);
+  box-shadow: var(--shadow-sm);
 }
 
 .close-tag {
@@ -427,6 +461,7 @@
   overflow-x: auto;
   margin: 0 -1.5rem;
   padding: 0 1.5rem;
+  position: relative;
 }
 
 .inventory-table-styled {
@@ -486,7 +521,7 @@
   letter-spacing: 0.03em;
 }
 
-.sku-cell {
+.product_type {
   font-weight: 600;
   font-size: 0.8125rem;
 }
@@ -524,24 +559,47 @@
   text-transform: capitalize;
 }
 
-.status-pill.active {
+.status-pill[data-status="ACTIVE"] {
   background-color: #dcfce7;
   color: #15803d;
 }
 
-body.dark-mode .status-pill.active {
+body.dark-mode .status-pill[data-status="ACTIVE"] {
   background-color: rgba(22, 163, 74, 0.15);
   color: #4ade80;
 }
 
-.status-pill.out-of-stock {
+.status-pill[data-status="OUT OF STOCK"], .status-pill[data-status="EXPIRED"] {
   background-color: #fee2e2;
   color: #b91c1c;
 }
 
-body.dark-mode .status-pill.out-of-stock {
+body.dark-mode .status-pill[data-status="OUT OF STOCK"], .status-pill[data-status="EXPIRED"] {
   background-color: rgba(220, 38, 38, 0.15);
   color: #f87171;
+}
+
+/* 🟡 Light Mode: Amber Warning */
+.status-pill[data-status="WARNING"] {
+  background-color: #fef3c7; /* Soft amber/yellow tint */
+  color: #b45309;            /* Deep amber text for readability */
+}
+
+/* 🌙 Dark Mode: Glowing Translucent Gold Warning */
+body.dark-mode .status-pill[data-status="WARNING"] {
+  background-color: rgba(245, 158, 11, 0.15); /* 15% Amber opacity opacity */
+  color: #fbbf24;                             /* Bright amber text */
+}
+
+.action-cell {
+  text-align: center;
+}
+
+.action-buttons-wrapper {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  justify-content: center;
 }
 
 .btn-table-action {
@@ -561,6 +619,16 @@ body.dark-mode .status-pill.out-of-stock {
 .btn-table-action:hover {
   background-color: var(--border-color);
   color: var(--text-primary);
+}
+
+.btn-table-action.btn-edit:hover {
+  background-color: rgba(59, 130, 246, 0.15);
+  color: #3b82f6;
+}
+
+.btn-table-action.btn-delete:hover {
+  background-color: rgba(239, 68, 68, 0.15);
+  color: #ef4444;
 }
 
 /* Pagination Row */
@@ -683,3 +751,128 @@ body.dark-mode .status-pill.out-of-stock {
   overflow-y: auto;
   flex-grow: 1;
 }
+
+/* Centered Modal Overlay & Card for Edit Form */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(15, 23, 42, 0.6);
+  backdrop-filter: blur(4px);
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.modal-overlay.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.modal-card {
+  width: 480px;
+  max-width: 90%;
+  max-height: 90vh;
+  background-color: var(--surface-bg);
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.15), 0 8px 10px -6px rgba(0, 0, 0, 0.15);
+  border-radius: 12px;
+  border: 1px solid var(--border-color);
+  display: flex;
+  flex-direction: column;
+  transform: scale(0.95);
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.modal-overlay.open .modal-card {
+  transform: scale(1);
+}
+
+/* Custom dropdown styling removed in favor of native select/option element */
+
+/* Custom spin animation for loading buttons */
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.spin-icon {
+  animation: spin 1s linear infinite;
+  display: inline-block;
+}
+
+/* Premium Toast Notifications */
+.toast-notification {
+  position: fixed;
+  bottom: 24px;
+  right: -320px;
+  background: var(--surface-bg);
+  border-left: 4px solid var(--primary-emerald);
+  color: var(--text-primary);
+  padding: 12px 20px;
+  border-radius: 8px;
+  box-shadow: var(--shadow-lg);
+  border: 1px solid var(--border-color);
+  border-left-width: 4px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  font-weight: 600;
+  z-index: 9999;
+  transition: right 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease;
+  opacity: 0;
+}
+
+.toast-notification.show {
+  right: 24px;
+  opacity: 1;
+}
+
+/* Loading Overlay for centering loading screen */
+.loading-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.75);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+  transition: opacity 0.25s ease, visibility 0.25s ease;
+  visibility: visible;
+  pointer-events: auto; /* Block all interactions, clicks, and scrolls on the table area */
+}
+
+/* Lock container scrollbar when loading overlay is active */
+.full-width-table-container:has(.loading-overlay:not(.hidden)) {
+  overflow-x: hidden;
+}
+
+body.dark-mode .loading-overlay {
+  background-color: rgba(30, 30, 30, 0.75);
+}
+
+.loading-overlay.hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.loading-spinner {
+  width: 48px;
+  height: 48px;
+  border: 4px solid var(--border-color);
+  border-top-color: var(--secondary-indigo);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
