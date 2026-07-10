@@ -66,10 +66,14 @@ export default class ItemManager {
      * @returns {Object} The raw created product object
      */
     addProduct(productData) {
-        const products = this.itemRepository.getRawProducts();
-        products.push(productData);
-        this.itemRepository.saveRawProducts(products);
-        return productData;
+        try {
+            const products = this.itemRepository.getRawProducts();
+            products.push(productData);
+            this.itemRepository.saveRawProducts(products);
+            return productData;
+        } catch (error) {
+            throw error;
+        }
     }
 
     /**

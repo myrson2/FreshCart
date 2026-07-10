@@ -1,8 +1,6 @@
 import PerishableItems from "../../../model/PerishableItems.js";
 import BulkItems from "../../../model/BulkItems.js";
-
-//render all the products in the dashboard
-const inventoryTableBody = document.getElementById("inventory-tbody-styled");
+import { inventoryTableBody } from "../inventory.js";
 
 let current_category = [];
 let flag_category = 'ALL';

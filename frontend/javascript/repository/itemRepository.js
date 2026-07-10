@@ -67,7 +67,11 @@ export default class ItemRepository {
     }
 
     saveRawProducts(products) {
-        this.products = products;
-        localStorage.setItem(this.storageKey, JSON.stringify(this.products));
+       try {
+            this.products = products;
+            localStorage.setItem(this.storageKey, JSON.stringify(this.products));
+       } catch (error) {
+            return error;
+       }
     }
 }
