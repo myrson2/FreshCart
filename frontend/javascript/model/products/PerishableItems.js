@@ -1,4 +1,4 @@
-import Items from './Items.js';
+import Items from './Items.js'
 
 export default class PerishableItems extends Items {
     constructor(id, name, priceCents, quantity, productType, expiryDate) {

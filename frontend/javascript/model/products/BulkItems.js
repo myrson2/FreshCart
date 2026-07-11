@@ -1,4 +1,4 @@
-import Items from './Items.js';
+import Items from './Items.js'
 
 export default class BulkItems extends Items {
     constructor(id, name, priceCents, quantity, productType, weightPerUnit) {
@@ -9,15 +9,15 @@ export default class BulkItems extends Items {
 
     getFormattedWeight() {
         return this.quantity * this.weightPerUnit;
-    }   
+    }
 
     updateStatus() {
         if (this.quantity <= 5) {
-            if (this.quantity === 0){
+            if (this.quantity === 0) {
                 return 'OUT OF STOCK';
             }
-           return 'WARNING';
-        } 
+            return 'WARNING';
+        }
         return 'ACTIVE';
     }
 }

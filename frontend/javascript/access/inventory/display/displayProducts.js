@@ -1,5 +1,5 @@
-import PerishableItems from "../../../model/PerishableItems.js";
-import BulkItems from "../../../model/BulkItems.js";
+import PerishableItems from "../../../model/products/PerishableItems.js";
+import BulkItems from "../../../model/products/BulkItems.js";
 import { inventoryTableBody } from "../inventory.js";
 
 let current_category = [];
@@ -7,7 +7,7 @@ let flag_category = 'ALL';
 
 //displaying products
 export const displayAllProducts = (allProducts) => {
-  current_category = allProducts; 
+  current_category = allProducts;
   flag_category = 'ALL'
   renderInventory(current_category);
 }
@@ -19,50 +19,50 @@ export const displayPerishableProducts = (perishableItems) => {
 }
 
 export const displayBulkProducts = (bulkItems) => {
-    current_category = bulkItems;
-    flag_category = 'BULK';
-    renderInventory(current_category);
+  current_category = bulkItems;
+  flag_category = 'BULK';
+  renderInventory(current_category);
 }
 
 const renderInventory = (products) => {
   // Clear old rows safely
-    inventoryTableBody.innerHTML = "";
+  inventoryTableBody.innerHTML = "";
 
-    // If empty, render a clean empty-state layout row
-    if (!products || products.length === 0) {
-        inventoryTableBody.innerHTML = `<tr><td colspan="6" class="text-center">No products found matching this criteria.</td></tr>`;
-        return;
-    }
+  // If empty, render a clean empty-state layout row
+  if (!products || products.length === 0) {
+    inventoryTableBody.innerHTML = `<tr><td colspan="6" class="text-center">No products found matching this criteria.</td></tr>`;
+    return;
+  }
 
-    products.forEach(prd => {
-      // 1. 🎯 Dynamic Variable Column: Handle only what makes them different
-      let variantColumnHtml = "";
+  products.forEach(prd => {
+    // 1. 🎯 Dynamic Variable Column: Handle only what makes them different
+    let variantColumnHtml = "";
 
-      if (prd instanceof PerishableItems) {
-          // Safe check: If expiryDate is a string, wrap it into a Date object first before formatting
-          const expiry = prd.expiryDate instanceof Date ? prd.expiryDate : new Date(prd.expiryDate);
-          const formattedDate = !isNaN(expiry) ? expiry.toLocaleDateString() : "N/A";
+    if (prd instanceof PerishableItems) {
+      // Safe check: If expiryDate is a string, wrap it into a Date object first before formatting
+      const expiry = prd.expiryDate instanceof Date ? prd.expiryDate : new Date(prd.expiryDate);
+      const formattedDate = !isNaN(expiry) ? expiry.toLocaleDateString() : "N/A";
 
-          variantColumnHtml = `
+      variantColumnHtml = `
               <div class="variant-info">
                 <span class="variant-count">${formattedDate}</span>
                 <span class="variant-subtitle">Varies on: Expiration</span>
               </div>
           `;
-      } else if (prd instanceof BulkItems) {
-          variantColumnHtml = `
+    } else if (prd instanceof BulkItems) {
+      variantColumnHtml = `
               <div class="variant-info">
                 <span class="variant-count">${prd.weightPerUnit} kg</span>
                 <span class="variant-subtitle">Varies on: Weight</span>
               </div>
           `;
-      } else {
-          // Fallback catch-all case for base Items
-          variantColumnHtml = `<span class="text-muted">—</span>`;
-      }
+    } else {
+      // Fallback catch-all case for base Items
+      variantColumnHtml = `<span class="text-muted">—</span>`;
+    }
 
-      // 2. 🧱 Unified Structural Layout: Write this exactly ONCE
-      const rowHTML = `
+    // 2. 🧱 Unified Structural Layout: Write this exactly ONCE
+    const rowHTML = `
           <tr data-id="${prd.id}">
             <td><input type="checkbox" class="product-checkbox"></td>
             <td><span class="category-badge">${prd.id}</span></td>
@@ -87,23 +87,23 @@ const renderInventory = (products) => {
           </tr>
       `;
 
-      // 3. Render directly to the DOM interface container
-      inventoryTableBody.insertAdjacentHTML("beforeend", rowHTML);
+    // 3. Render directly to the DOM interface container
+    inventoryTableBody.insertAdjacentHTML("beforeend", rowHTML);
   });
 }
 
 export const filterStatus = (status) => {
-  if(current_category === null) return;
-  
-  let filtered = status === 'ALL' 
-  ? current_category 
-  : current_category.filter(p => p.status === status);
+  if (current_category === null) return;
+
+  let filtered = status === 'ALL'
+    ? current_category
+    : current_category.filter(p => p.status === status);
 
   renderInventory(filtered);
 }
 
 export const searchEngineRender = (inputs) => {
   const filteredByInput = current_category.filter(products =>
-  products.name.toLowerCase().includes(inputs.toLowerCase()));
+    products.name.toLowerCase().includes(inputs.toLowerCase()));
   renderInventory(filteredByInput)
 }

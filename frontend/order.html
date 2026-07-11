@@ -467,7 +467,7 @@
 
   </div>
 
-  <!-- Order Dispatch Engine Slide-in Drawer -->
+  <!-- Order Dispatch Engine Centered Modal -->
   <div class="drawer-overlay" id="dispatch-drawer-overlay">
     <div class="drawer-card" id="dispatch-drawer-card">
       <div class="drawer-header">
@@ -483,43 +483,413 @@
         </button>
       </div>
       <div class="drawer-body">
-        <form id="order-form" class="control-form" onsubmit="event.preventDefault();">
-          <div class="form-group">
-            <label for="order-product">Select Cargo Item</label>
-            <select id="order-product" required>
-              <option value="PROD-01">Premium Whole Milk (₱99.00)</option>
-              <option value="PROD-02">Organic Bananas (₱120.00)</option>
-              <option value="PROD-04">Almond Milk (Unsweetened) (₱145.00)</option>
-              <option value="PROD-07">Fresh Hass Avocados (₱290.00)</option>
-            </select>
-          </div>
-
-          <div class="form-group">
-            <label for="order-qty">Order Qty (units/kg)</label>
-            <input type="number" id="order-qty" min="0.1" step="0.1" value="1" required>
-          </div>
-
-          <div class="form-row">
-            <div class="form-group">
-              <label for="order-lat">Latitude</label>
-              <input type="number" id="order-lat" min="-90" max="90" step="0.0001" placeholder="14.6200" required>
+        <form id="order-form" class="dispatch-grid" onsubmit="event.preventDefault();">
+          
+          <!-- Left Column: Products List Table -->
+          <div class="dispatch-products-section">
+            <div class="dispatch-section-title">
+              <i class="bi bi-box-seam"></i> Select Products
             </div>
-
-            <div class="form-group">
-              <label for="order-lng">Longitude</label>
-              <input type="number" id="order-lng" min="-180" max="180" step="0.0001" placeholder="121.0500" required>
+            
+            <!-- Category Filter Chips -->
+            <div class="dispatch-filter-row">
+              <input type="radio" name="product-dispatch-filter" id="dispatch-filter-all" class="dispatch-filter-radio" checked data-category="ALL">
+              <label for="dispatch-filter-all" class="dispatch-filter-tag">All</label>
+              
+              <input type="radio" name="product-dispatch-filter" id="dispatch-filter-perishable" class="dispatch-filter-radio" data-category="PERISHABLE">
+              <label for="dispatch-filter-perishable" class="dispatch-filter-tag">Perishable</label>
+              
+              <input type="radio" name="product-dispatch-filter" id="dispatch-filter-bulk" class="dispatch-filter-radio" data-category="BULK">
+              <label for="dispatch-filter-bulk" class="dispatch-filter-tag">Bulk</label>
+            </div>
+            
+            <div class="dispatch-table-wrapper">
+              <table class="dispatch-table">
+                <thead>
+                  <tr>
+                    <th>Product Name</th>
+                    <th>Price</th>
+                    <th>Expiry / Weight</th>
+                    <th class="cart-header-col"><i class="bi bi-cart"></i></th>
+                  </tr>
+                </thead>
+                <tbody id="dispatch-products-tbody">
+                  <tr data-category="PERISHABLE">
+                    <td>
+                      <span class="product-name-text" data-id="PROD-01">Premium Whole Milk</span>
+                    </td>
+                    <td class="text-mono">₱99.00</td>
+                    <td><span class="status-badge-subtext">2026-07-25</span></td>
+                    <td class="cart-trigger-col">
+                      <!-- 
+                        Event: click
+                        Handler: openProductDetailModal()
+                        Target: .btn-add-to-cart-trigger
+                      -->
+                      <a href="#product-detail-overlay-prod-01" class="btn-add-to-cart-trigger" data-id="PROD-01">
+                        <i class="bi bi-cart-plus"></i>
+                      </a>
+                    </td>
+                  </tr>
+                  <tr data-category="BULK">
+                    <td>
+                      <span class="product-name-text" data-id="PROD-02">Organic Bananas</span>
+                    </td>
+                    <td class="text-mono">₱120.00</td>
+                    <td><span class="status-badge-subtext">2026-07-18</span></td>
+                    <td class="cart-trigger-col">
+                      <!-- 
+                        Event: click
+                        Handler: openProductDetailModal()
+                        Target: .btn-add-to-cart-trigger
+                      -->
+                      <a href="#product-detail-overlay-prod-02" class="btn-add-to-cart-trigger" data-id="PROD-02">
+                        <i class="bi bi-cart-plus"></i>
+                      </a>
+                    </td>
+                  </tr>
+                  <tr data-category="PERISHABLE">
+                    <td>
+                      <span class="product-name-text" data-id="PROD-04">Almond Milk (Unsweetened)</span>
+                    </td>
+                    <td class="text-mono">₱145.00</td>
+                    <td><span class="status-badge-subtext">2026-08-01</span></td>
+                    <td class="cart-trigger-col">
+                      <!-- 
+                        Event: click
+                        Handler: openProductDetailModal()
+                        Target: .btn-add-to-cart-trigger
+                      -->
+                      <a href="#product-detail-overlay-prod-04" class="btn-add-to-cart-trigger" data-id="PROD-04">
+                        <i class="bi bi-cart-plus"></i>
+                      </a>
+                    </td>
+                  </tr>
+                  <tr data-category="BULK">
+                    <td>
+                      <span class="product-name-text" data-id="PROD-07">Fresh Hass Avocados</span>
+                    </td>
+                    <td class="text-mono">₱290.00</td>
+                    <td><span class="status-badge-subtext">2026-07-15</span></td>
+                    <td class="cart-trigger-col">
+                      <!-- 
+                        Event: click
+                        Handler: openProductDetailModal()
+                        Target: .btn-add-to-cart-trigger
+                      -->
+                      <a href="#product-detail-overlay-prod-07" class="btn-add-to-cart-trigger" data-id="PROD-07">
+                        <i class="bi bi-cart-plus"></i>
+                      </a>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
           </div>
           
-          <div class="alert-box info-alert-box" style="margin-top: 1rem; margin-bottom: 1.5rem;">
-            <i class="bi bi-question-circle"></i>
-            <span>Coordinates can be manually configured to dispatch mock cargo to client sites.</span>
-          </div>
+          <!-- Right Column: Order Details -->
+          <div class="dispatch-details-section">
+            <div class="dispatch-section-title">
+              <i class="bi bi-file-earmark-text"></i> Order Details
+            </div>
+            
+            <!-- Customer Name & Avatar Input -->
+            <div class="customer-name-wrapper">
+              <!--
+                Event: input
+                Handler: updateAvatarInitials()
+                Target: #order-customer-name
+                Behavior: Parses first two letters, capitalizes them, and updates #customer-avatar-initials inner text.
+              -->
+              <div class="customer-avatar-preview" id="customer-avatar-initials">FC</div>
+              <div class="customer-name-input-group">
+                <label for="order-customer-name">Customer Name</label>
+                <input type="text" id="order-customer-name" placeholder="Enter customer name" required>
+              </div>
+            </div>
+            
+            <!-- Selected Items Cart List -->
+            <div class="order-selected-items-wrapper">
+              <div class="order-selected-items-header">
+                <span>Cart Items</span>
+                <span class="status-badge-subtext">Selected</span>
+              </div>
+              <div id="order-cart-items-container">
+                <p id="cart-empty-message">No items added to dispatch cart.</p>
+              </div>
+            </div>
+            
+            <!-- Order Summary Card -->
+            <div class="order-summary-box">
+              <div style="font-size: 0.8125rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.25rem; border-bottom: 1px solid var(--border-color); padding-bottom: 0.25rem;">
+                Cargo Pricing Summary
+              </div>
+              <div class="summary-row">
+                <span>Selected Items</span>
+                <span id="summary-items-count" class="text-mono">0 items</span>
+              </div>
+              <div class="summary-row">
+                <span>Items Subtotal</span>
+                <span id="summary-subtotal" class="text-mono">₱0.00</span>
+              </div>
+              <div class="summary-row">
+                <span>Shipping Surcharge</span>
+                <span id="summary-shipping" class="text-mono">₱0.00</span>
+              </div>
+              <div class="summary-row total">
+                <span>Estimated Total</span>
+                <span id="summary-total" class="text-mono">₱0.00</span>
+              </div>
+            </div>
+            
+            <div class="alert-box info-alert-box dispatch-info-alert">
+              <i class="bi bi-question-circle"></i>
+              <span>Define coordinates to locate cargo pin on Leaflet logistics map.</span>
+            </div>
 
-          <button type="submit" class="btn btn-primary btn-full">
-            <i class="bi bi-cursor"></i> Dispatch Delivery
-          </button>
+            <!--
+              Event: submit
+              Handler: handleDispatchSubmit()
+              Target: #order-form
+              Behavior: Validates form fields, gathers selected product entities, and creates the new Order instance.
+            -->
+            <button type="submit" class="btn btn-primary btn-full btn-dispatch-submit">
+              <i class="bi bi-cursor"></i> Dispatch Delivery
+            </button>
+          </div>
         </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Product 1 Detail Modal -->
+  <div class="drawer-overlay" id="product-detail-overlay-prod-01">
+    <div class="product-detail-modal-card" id="product-detail-card-prod-01">
+      <div class="product-detail-hero" style="background: linear-gradient(135deg, rgba(99, 102, 241, 0.15), rgba(16, 185, 129, 0.15));">
+        <i class="bi bi-cup-hot" style="color: var(--secondary-indigo);"></i>
+      </div>
+      <div class="product-detail-info-body">
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.5rem;">
+          <div>
+            <h3 style="font-size: 1.15rem; font-weight: 700; color: var(--text-primary);">Premium Whole Milk</h3>
+            <p style="font-size: 0.75rem; color: var(--text-muted); font-family: var(--font-mono); margin-top: 0.15rem;">PROD-01</p>
+          </div>
+          <a href="#" class="btn-close-drawer" style="margin-top: -0.5rem; margin-right: -0.5rem; text-decoration: none; display: flex; align-items: center; justify-content: center;">
+            <i class="bi bi-x-lg"></i>
+          </a>
+        </div>
+        
+        <p style="font-size: 0.8125rem; color: var(--text-secondary); line-height: 1.4; margin-bottom: 1rem;">
+          Premium organic temperature-controlled fresh perishable milk sourced from high-quality local dairy farms. Kept chilled under 4°C to preserve taste and freshness.
+        </p>
+
+        <div class="product-detail-meta-row">
+          <div class="product-meta-item">
+            <span>Price</span>
+            <span class="text-mono">₱99.00</span>
+          </div>
+          <div class="product-meta-item">
+            <span>Expiry Date</span>
+            <span>2026-07-25</span>
+          </div>
+          <div class="product-meta-item span-2">
+            <span>Current Stock</span>
+            <span class="text-mono product-detail-stock" id="stock-prod-01" data-stock="15">Loading...</span>
+          </div>
+        </div>
+
+        <div class="product-quantity-select-row">
+          <label for="input-qty-prod-01">Quantity to Add</label>
+          <div class="product-quantity-input-group">
+            <input type="number" id="input-qty-prod-01" class="dispatch-product-qty" min="0.1" step="0.1" value="1">
+            <!--
+              Event: click
+              Handler: handleAddToCart()
+              Target: #btn-add-to-cart-prod-01
+            -->
+            <button type="button" class="btn btn-primary btn-add-to-cart" id="btn-add-to-cart-prod-01" data-id="PROD-01" data-name="Premium Whole Milk" data-price="9900" data-weight="1.0">
+              <i class="bi bi-cart-plus"></i> Add to Cart
+            </button>
+          </div>
+        </div>
+
+        <a href="#" class="btn-card-secondary btn-cancel">
+          Cancel
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Product 2 Detail Modal -->
+  <div class="drawer-overlay" id="product-detail-overlay-prod-02">
+    <div class="product-detail-modal-card" id="product-detail-card-prod-02">
+      <div class="product-detail-hero" style="background: linear-gradient(135deg, rgba(245, 158, 11, 0.15), rgba(16, 185, 129, 0.15));">
+        <i class="bi bi-basket" style="color: var(--warning-amber);"></i>
+      </div>
+      <div class="product-detail-info-body">
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.5rem;">
+          <div>
+            <h3 style="font-size: 1.15rem; font-weight: 700; color: var(--text-primary);">Organic Bananas</h3>
+            <p style="font-size: 0.75rem; color: var(--text-muted); font-family: var(--font-mono); margin-top: 0.15rem;">PROD-02</p>
+          </div>
+          <a href="#" class="btn-close-drawer" style="margin-top: -0.5rem; margin-right: -0.5rem; text-decoration: none; display: flex; align-items: center; justify-content: center;">
+            <i class="bi bi-x-lg"></i>
+          </a>
+        </div>
+        
+        <p style="font-size: 0.8125rem; color: var(--text-secondary); line-height: 1.4; margin-bottom: 1rem;">
+          Naturally ripened fresh organic bananas, rich in potassium and nutrients. Sourced from certified pesticide-free tropical cooperative plantations.
+        </p>
+
+        <div class="product-detail-meta-row">
+          <div class="product-meta-item">
+            <span>Price</span>
+            <span class="text-mono">₱120.00</span>
+          </div>
+          <div class="product-meta-item">
+            <span>Expiry Date</span>
+            <span>2026-07-18</span>
+          </div>
+          <div class="product-meta-item span-2">
+            <span>Current Stock</span>
+            <span class="text-mono product-detail-stock" id="stock-prod-02" data-stock="10">Loading...</span>
+          </div>
+        </div>
+
+        <div class="product-quantity-select-row">
+          <label for="input-qty-prod-02">Quantity to Add</label>
+          <div class="product-quantity-input-group">
+            <input type="number" id="input-qty-prod-02" class="dispatch-product-qty" min="0.1" step="0.1" value="1">
+            <!--
+              Event: click
+              Handler: handleAddToCart()
+              Target: #btn-add-to-cart-prod-02
+            -->
+            <button type="button" class="btn btn-primary btn-add-to-cart" id="btn-add-to-cart-prod-02" data-id="PROD-02" data-name="Organic Bananas" data-price="12000" data-weight="0.5">
+              <i class="bi bi-cart-plus"></i> Add to Cart
+            </button>
+          </div>
+        </div>
+
+        <a href="#" class="btn-card-secondary btn-cancel">
+          Cancel
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Product 3 Detail Modal -->
+  <div class="drawer-overlay" id="product-detail-overlay-prod-04">
+    <div class="product-detail-modal-card" id="product-detail-card-prod-04">
+      <div class="product-detail-hero" style="background: linear-gradient(135deg, rgba(99, 102, 241, 0.15), rgba(59, 130, 246, 0.15));">
+        <i class="bi bi-cup-hot" style="color: var(--info-blue);"></i>
+      </div>
+      <div class="product-detail-info-body">
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.5rem;">
+          <div>
+            <h3 style="font-size: 1.15rem; font-weight: 700; color: var(--text-primary);">Almond Milk (Unsweetened)</h3>
+            <p style="font-size: 0.75rem; color: var(--text-muted); font-family: var(--font-mono); margin-top: 0.15rem;">PROD-04</p>
+          </div>
+          <a href="#" class="btn-close-drawer" style="margin-top: -0.5rem; margin-right: -0.5rem; text-decoration: none; display: flex; align-items: center; justify-content: center;">
+            <i class="bi bi-x-lg"></i>
+          </a>
+        </div>
+        
+        <p style="font-size: 0.8125rem; color: var(--text-secondary); line-height: 1.4; margin-bottom: 1rem;">
+          Dairy-free unsweetened almond beverage packed in durable eco-friendly carton packaging. Fortified with vitamins D and calcium, with zero added sugars.
+        </p>
+
+        <div class="product-detail-meta-row">
+          <div class="product-meta-item">
+            <span>Price</span>
+            <span class="text-mono">₱145.00</span>
+          </div>
+          <div class="product-meta-item">
+            <span>Expiry Date</span>
+            <span>2026-08-01</span>
+          </div>
+          <div class="product-meta-item span-2">
+            <span>Current Stock</span>
+            <span class="text-mono product-detail-stock" id="stock-prod-04" data-stock="22">Loading...</span>
+          </div>
+        </div>
+
+        <div class="product-quantity-select-row">
+          <label for="input-qty-prod-04">Quantity to Add</label>
+          <div class="product-quantity-input-group">
+            <input type="number" id="input-qty-prod-04" class="dispatch-product-qty" min="0.1" step="0.1" value="1">
+            <!--
+              Event: click
+              Handler: handleAddToCart()
+              Target: #btn-add-to-cart-prod-04
+            -->
+            <button type="button" class="btn btn-primary btn-add-to-cart" id="btn-add-to-cart-prod-04" data-id="PROD-04" data-name="Almond Milk (Unsweetened)" data-price="14500" data-weight="1.0">
+              <i class="bi bi-cart-plus"></i> Add to Cart
+            </button>
+          </div>
+        </div>
+
+        <a href="#" class="btn-card-secondary btn-cancel">
+          Cancel
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Product 4 Detail Modal -->
+  <div class="drawer-overlay" id="product-detail-overlay-prod-07">
+    <div class="product-detail-modal-card" id="product-detail-card-prod-07">
+      <div class="product-detail-hero" style="background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(59, 130, 246, 0.15));">
+        <i class="bi bi-flower1" style="color: var(--primary-emerald);"></i>
+      </div>
+      <div class="product-detail-info-body">
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.5rem;">
+          <div>
+            <h3 style="font-size: 1.15rem; font-weight: 700; color: var(--text-primary);">Fresh Hass Avocados</h3>
+            <p style="font-size: 0.75rem; color: var(--text-muted); font-family: var(--font-mono); margin-top: 0.15rem;">PROD-07</p>
+          </div>
+          <a href="#" class="btn-close-drawer" style="margin-top: -0.5rem; margin-right: -0.5rem; text-decoration: none; display: flex; align-items: center; justify-content: center;">
+            <i class="bi bi-x-lg"></i>
+          </a>
+        </div>
+        
+        <p style="font-size: 0.8125rem; color: var(--text-secondary); line-height: 1.4; margin-bottom: 1rem;">
+          Grade-A ripe Hass avocados imported directly. Selected carefully for bulk packaging, ideal for grocery distribution, salad preparations, or direct retail display.
+        </p>
+
+        <div class="product-detail-meta-row">
+          <div class="product-meta-item">
+            <span>Price</span>
+            <span class="text-mono">₱290.00</span>
+          </div>
+          <div class="product-meta-item">
+            <span>Expiry Date</span>
+            <span>2026-07-15</span>
+          </div>
+          <div class="product-meta-item span-2">
+            <span>Current Stock</span>
+            <span class="text-mono product-detail-stock" id="stock-prod-07" data-stock="18">Loading...</span>
+          </div>
+        </div>
+
+        <div class="product-quantity-select-row">
+          <label for="input-qty-prod-07">Quantity to Add</label>
+          <div class="product-quantity-input-group">
+            <input type="number" id="input-qty-prod-07" class="dispatch-product-qty" min="0.1" step="0.1" value="1">
+            <!--
+              Event: click
+              Handler: handleAddToCart()
+              Target: #btn-add-to-cart-prod-07
+            -->
+            <button type="button" class="btn btn-primary btn-add-to-cart" id="btn-add-to-cart-prod-07" data-id="PROD-07" data-name="Fresh Hass Avocados" data-price="29000" data-weight="0.8">
+              <i class="bi bi-cart-plus"></i> Add to Cart
+            </button>
+          </div>
+        </div>
+
+        <a href="#" class="btn-card-secondary btn-cancel">
+          Cancel
+        </a>
       </div>
     </div>
   </div>
@@ -528,122 +898,6 @@
 
 
   <!-- Theme Toggle & Grid Filter Script -->
-  <script>
-    // Theme toggle handling
-    document.getElementById('theme-toggle').addEventListener('change', (e) => {
-      if (e.target.checked) {
-        localStorage.setItem('theme', 'dark');
-        document.body.classList.add('dark-mode');
-      } else {
-        localStorage.setItem('theme', 'light');
-        document.body.classList.remove('dark-mode');
-      }
-    });
-
-    // Populate current local date on load
-    const dateOptions = { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' };
-    document.getElementById('live-date').innerText = new Date().toLocaleDateString('en-US', dateOptions);
-
-    // Drawer opening and closing logic
-    const openBtn = document.getElementById('btn-open-dispatch-form');
-    const closeBtn = document.getElementById('btn-close-drawer');
-    const overlay = document.getElementById('dispatch-drawer-overlay');
-    const card = document.getElementById('dispatch-drawer-card');
-
-    openBtn.addEventListener('click', () => {
-      overlay.classList.add('open');
-    });
-
-    const closeDrawer = () => {
-      overlay.classList.remove('open');
-    };
-
-    closeBtn.addEventListener('click', closeDrawer);
-    overlay.addEventListener('click', (e) => {
-      if (e.target === overlay) {
-        closeDrawer();
-      }
-    });
-
-    // Grid Status Filtering
-    const chips = document.querySelectorAll('.chip');
-    const cards = document.querySelectorAll('.order-card-styled');
-
-    chips.forEach((chip) => {
-      chip.addEventListener('click', () => {
-        // Toggle active styling
-        chips.forEach((c) => c.classList.remove('active'));
-        chip.classList.add('active');
-
-        // Apply filter to grid elements
-        const filterVal = chip.getAttribute('data-filter');
-        cards.forEach((card) => {
-          if (filterVal === 'all') {
-            card.style.display = 'flex';
-          } else {
-            const cardStatus = card.getAttribute('data-status');
-            if (cardStatus === filterVal) {
-              card.style.display = 'flex';
-            } else {
-              card.style.display = 'none';
-            }
-          }
-        });
-      });
-    });
-
-    // Dispatch button interaction simulation
-    const dispatchBtns = document.querySelectorAll('.action-dispatch-btn');
-    dispatchBtns.forEach((btn) => {
-      btn.addEventListener('click', (e) => {
-        const orderCard = e.currentTarget.closest('.order-card-styled');
-        
-        // Find badge and text nodes inside the target order card
-        const badge = orderCard.querySelector('.status-badge-styled');
-        const badgeText = orderCard.querySelector('.status-badge-subtext');
-        
-        // Update states: if it was ready, dispatch it. If it was in progress, complete it.
-        const currentStatus = orderCard.getAttribute('data-status');
-        if (currentStatus === 'ready') {
-          orderCard.setAttribute('data-status', 'progress');
-          badge.className = 'status-badge-styled progress';
-          badge.innerHTML = '<i class="bi bi-clock-history"></i> In Progress';
-          badgeText.innerText = 'Packing cargo';
-          e.currentTarget.innerText = 'Deliver';
-        } else if (currentStatus === 'progress') {
-          orderCard.setAttribute('data-status', 'completed');
-          badge.className = 'status-badge-styled completed';
-          badge.innerHTML = '<i class="bi bi-patch-check"></i> Completed';
-          badgeText.innerText = 'Delivered';
-          
-          // Disable button
-          e.currentTarget.disabled = true;
-          e.currentTarget.className = 'btn-card-primary completed-btn';
-          e.currentTarget.innerText = 'Delivered';
-        }
-
-        // Retrigger filter active state visual matching
-        const activeFilter = document.querySelector('.chip.active').getAttribute('data-filter');
-        if (activeFilter !== 'all' && activeFilter !== orderCard.getAttribute('data-status')) {
-          orderCard.style.display = 'none';
-        }
-      });
-    });
-
-    // Simple search filtering
-    const searchInput = document.getElementById('order-search');
-    searchInput.addEventListener('input', (e) => {
-      const query = e.target.value.toLowerCase().trim();
-      cards.forEach((card) => {
-        const name = card.querySelector('.user-meta h4').innerText.toLowerCase();
-        const orderId = card.querySelector('.user-meta span').innerText.toLowerCase();
-        if (name.includes(query) || orderId.includes(query)) {
-          card.style.display = 'flex';
-        } else {
-          card.style.display = 'none';
-        }
-      });
-    });
-  </script>
+  <script type="module" src="javascript/app.js"> </script>
 </body>
 </html>

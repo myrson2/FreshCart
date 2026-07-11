@@ -2,6 +2,8 @@ import { renderInventory } from "./access/inventory/inventory.js";
 import ItemRepository from "./repository/itemRepository.js";
 import ItemManager from "./service/ItemManager.js";
 
+import { renderOrderDashboard } from "./access/inventory/order.js";
+
 // 1. Create the dependency graph
 const itemRepository = new ItemRepository("inventory");
 const itemManager = new ItemManager(itemRepository);
@@ -57,10 +59,11 @@ async function database() {
       renderInventory(itemManager);
     }
 
-    // // 2. Check if we are on the dashboard page
-    // if (document.getElementById('dashboard-canvas')) {
-    //     renderDashboard(itemManager);
-    // }
+    if (window.location.pathname.includes("order.html")) {
+      console.log("Entering renderOrderDashboard()");
+      renderOrderDashboard(); // parameter soon
+    }
+
   } catch (error) {
     console.error(
       "[Composition Root] Failed to bootstrap application dependencies:",

@@ -1,5 +1,5 @@
-import BulkItems from "../model/BulkItems.js";
-import PerishableItems from "../model/PerishableItems.js";
+import BulkItems from "../model/products/BulkItems.js";
+import PerishableItems from "../model/products/PerishableItems.js";
 
 export default class ItemRepository {
     constructor(storageKey = 'inventory', jsonUrl = './data/json/products.json') {
@@ -34,7 +34,7 @@ export default class ItemRepository {
             let temp_storage = [];
             let items = null;
             products.forEach(product => {
-                if(product.productType === 'PERISHABLE') {
+                if (product.productType === 'PERISHABLE') {
                     items = new PerishableItems(
                         product.id,
                         product.name,
@@ -67,11 +67,11 @@ export default class ItemRepository {
     }
 
     saveRawProducts(products) {
-       try {
+        try {
             this.products = products;
             localStorage.setItem(this.storageKey, JSON.stringify(this.products));
-       } catch (error) {
+        } catch (error) {
             return error;
-       }
+        }
     }
 }
