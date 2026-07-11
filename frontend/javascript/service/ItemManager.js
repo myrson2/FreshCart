@@ -1,6 +1,6 @@
-import Items from "../model/Items.js";
-import PerishableItems from "../model/PerishableItems.js";
-import BulkItems from "../model/BulkItems.js";
+import Items from "../model/products/Items.js";
+import PerishableItems from "../model/products/PerishableItems.js";
+import BulkItems from "../model/products/BulkItems.js";
 import ItemRepository from '../repository/itemRepository.js';
 
 export default class ItemManager {
@@ -12,13 +12,13 @@ export default class ItemManager {
      * Retrieves all products from the repository and converts them to their rich OOP model instances.
      * @returns {Array<Items|PerishableItems|BulkItems>}
      */
-    
+
     getAllProducts() {
         const rawProducts = this.itemRepository.getRawProducts();
 
         return rawProducts.map(p => {
             // Unpack the properties cleanly out of the product object wrapper
-           const {id, name, priceCents, quantity, productType, expirationDate, expiryDate, weightPerUnit } = p;
+            const { id, name, priceCents, quantity, productType, expirationDate, expiryDate, weightPerUnit } = p;
             const dateVal = expiryDate || expirationDate;
 
             const normalizedType = (productType || '').toUpperCase();
@@ -26,13 +26,13 @@ export default class ItemManager {
             if (normalizedType === 'PERISHABLE') {
                 return new PerishableItems(id, name, priceCents, quantity, productType, dateVal);
             }
-            
+
             if (normalizedType === 'BULK') {
                 return new BulkItems(id, name, priceCents, quantity, productType, weightPerUnit);
             }
 
             // Always provide a fallback return statement to keep data streams unbroken
-            return null; 
+            return null;
         }).filter(item => item !== null); // This line automatically filters out any corrupted or broken items!
     }
 

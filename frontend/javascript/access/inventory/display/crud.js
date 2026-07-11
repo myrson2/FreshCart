@@ -1,5 +1,5 @@
-import PerishableItems from "../../../model/PerishableItems.js";
-import BulkItems from "../../../model/BulkItems.js";
+import PerishableItems from "../../../model/products/PerishableItems.js";
+import BulkItems from "../../../model/products/BulkItems.js";
 
 export const addProduct = (ItemManager) => {
     try {
